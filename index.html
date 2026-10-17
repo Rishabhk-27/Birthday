@@ -40,17 +40,17 @@
     /* TOP CREATOR BAR (Removed automatically in exported file) */
     #creator-bar {
       position: fixed;
-      top: 10px;
+      top: 8px;
       left: 50%;
       transform: translateX(-50%);
       z-index: 9000;
       background: rgba(17, 24, 39, 0.94);
       backdrop-filter: blur(12px);
-      padding: 7px 13px;
+      padding: 6px 12px;
       border-radius: 999px;
       display: flex;
       align-items: center;
-      gap: 7px;
+      gap: 6px;
       flex-wrap: wrap;
       justify-content: center;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
@@ -62,14 +62,14 @@
     .c-btn {
       border: none;
       border-radius: 999px;
-      padding: 7px 14px;
+      padding: 6px 12px;
       font-family: inherit;
-      font-size: 0.78rem;
+      font-size: 0.75rem;
       font-weight: 700;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 5px;
+      gap: 4px;
       color: #fff;
       transition: transform 0.15s ease, opacity 0.15s ease;
     }
@@ -86,9 +86,13 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 14px;
+      padding: 12px;
       z-index: 5000;
       transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    /* When Creator Bar is present on screen, reserve top space so it never overlaps the card */
+    body:has(#creator-bar) #stage-overlay {
+      padding-top: 86px;
     }
     #stage-overlay.hidden {
       opacity: 0;
@@ -96,24 +100,26 @@
       transform: scale(1.04);
     }
 
+    /* FIXED: justify-content: flex-start + margin: auto 0 on child prevents top cut-off on phones */
     .stage-card-frame {
       background: #ffffff;
       width: 100%;
       max-width: 680px;
-      min-height: 440px;
-      max-height: 90vh;
-      border-radius: 30px;
+      min-height: 420px;
+      max-height: 100%;
+      border-radius: 28px;
       border: 3px solid #1f2937;
       box-shadow: 0 24px 65px rgba(0, 0, 0, 0.65), inset 0 0 0 4px #f3f4f6;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      padding: 24px 20px 28px;
+      justify-content: flex-start;
+      padding: 22px 18px 24px;
       position: relative;
       overflow-y: auto;
       overflow-x: hidden;
       user-select: none;
+      -webkit-overflow-scrolling: touch;
     }
 
     .stage-card-frame.shake { animation: shakeCard 0.45s ease; }
@@ -127,6 +133,7 @@
 
     .stage-screen {
       width: 100%;
+      margin: auto 0;
       display: none;
       flex-direction: column;
       align-items: center;
@@ -144,20 +151,23 @@
       background-image:
         linear-gradient(90deg, rgba(244, 162, 184, 0.22) 50%, transparent 50%),
         linear-gradient(rgba(244, 162, 184, 0.22) 50%, transparent 50%);
-      background-size: 36px 36px;
-      border-radius: 22px;
-      padding: 18px 14px;
+      background-size: 32px 32px;
+      border-radius: 20px;
+      padding: 16px 12px;
       width: 100%;
       position: relative;
+      overflow: hidden;
     }
 
     /* STAGE 1: PLS ACCEPT THE GIFT */
     .curved-header-svg {
       width: 100%;
       max-width: 420px;
-      height: 88px;
+      height: auto;
+      aspect-ratio: 420 / 88;
       overflow: visible;
-      margin-bottom: -10px;
+      margin-bottom: -6px;
+      flex-shrink: 0;
     }
     .curved-header-text {
       font-family: 'Fredoka', sans-serif;
@@ -167,13 +177,14 @@
       letter-spacing: 2.2px;
     }
     .penguin-stage {
-      width: 210px;
-      height: 190px;
+      width: 200px;
+      height: 180px;
       display: flex;
       align-items: center;
       justify-content: center;
       position: relative;
-      margin: 2px 0 14px;
+      margin: 2px 0 12px;
+      flex-shrink: 0;
     }
     .floating-heart {
       animation: floatHeart 2.2s ease-in-out infinite;
@@ -208,7 +219,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 24px;
+      gap: 20px;
       width: 100%;
       margin-top: 6px;
     }
@@ -217,11 +228,11 @@
       background: #d92323;
       color: #ffffff;
       font-family: 'Fredoka', sans-serif;
-      font-size: 1.48rem;
+      font-size: 1.45rem;
       font-weight: 700;
       letter-spacing: 1.5px;
-      padding: 10px 36px;
-      min-width: 132px;
+      padding: 10px 34px;
+      min-width: 128px;
       border-radius: 999px;
       border: 3px solid #2b1d1d;
       box-shadow: 0 5px 0 #7f1d1d, 0 8px 16px rgba(217, 35, 35, 0.35);
@@ -248,52 +259,63 @@
     .glossy-pill-btn:hover { background: #ef2323; transform: translateY(-2px); }
     .glossy-pill-btn:active { transform: translateY(3px); box-shadow: 0 2px 0 #7f1d1d; }
 
-    /* STAGE 2: CHOOSE A PENGUIN */
+    /* STAGE 2: CHOOSE A PENGUIN (FIXED: 3-column grid so all 3 stay side-by-side on phones) */
     .choose-penguin-title {
       font-family: 'Fredoka', sans-serif;
-      font-size: clamp(1.35rem, 4vw, 1.75rem);
+      font-size: clamp(1.3rem, 4.5vw, 1.75rem);
       color: #7c2d12;
       text-align: center;
-      margin-bottom: 6px;
+      margin-bottom: 4px;
     }
     .choose-penguin-sub {
       font-family: 'Fredoka', sans-serif;
-      font-size: clamp(1rem, 3.2vw, 1.28rem);
+      font-size: clamp(0.92rem, 3.4vw, 1.25rem);
       color: #9a3412;
       text-align: center;
-      min-height: 30px;
-      margin-bottom: 20px;
+      min-height: 28px;
+      margin-bottom: 16px;
     }
     .three-penguins-row {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: clamp(14px, 4vw, 36px);
-      flex-wrap: wrap;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: clamp(8px, 2.5vw, 28px);
       width: 100%;
+      max-width: 520px;
       padding: 6px 0 10px;
+      align-items: end;
+      justify-items: center;
     }
     .gift-penguin-item {
       display: flex;
       flex-direction: column;
       align-items: center;
+      width: 100%;
       cursor: pointer;
       opacity: 0;
       transform: translateY(18px) scale(0.9);
       transition: transform 0.25s ease, opacity 0.4s ease;
     }
+    .gift-penguin-item svg {
+      width: 100%;
+      max-width: 124px;
+      height: auto;
+      aspect-ratio: 140 / 165;
+      display: block;
+    }
     .gift-penguin-item.pop-visible { opacity: 1; transform: translateY(0) scale(1); }
-    .gift-penguin-item:hover { transform: translateY(-8px) scale(1.05); }
+    .gift-penguin-item:hover { transform: translateY(-6px) scale(1.04); }
     .gift-penguin-label {
-      margin-top: 8px;
+      margin-top: 6px;
       font-family: 'Fredoka', sans-serif;
-      font-size: 0.84rem;
+      font-size: clamp(0.66rem, 2.3vw, 0.84rem);
       color: #be123c;
       background: #fff1f2;
-      padding: 4px 12px;
+      padding: 4px 8px;
       border-radius: 999px;
       border: 1px solid #fecdd3;
       font-weight: 600;
+      text-align: center;
+      white-space: nowrap;
     }
 
     .corner-nav-btn {
@@ -301,29 +323,31 @@
       color: #92400e;
       border: 2px solid #b45309;
       border-radius: 999px;
-      padding: 7px 15px;
+      padding: 7px 14px;
       font-family: 'Fredoka', sans-serif;
-      font-size: 0.84rem;
+      font-size: clamp(0.76rem, 2.6vw, 0.85rem);
       font-weight: 700;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      justify-content: center;
+      gap: 5px;
       box-shadow: 0 3px 0 #b45309;
+      text-align: center;
     }
     .stage-nav-bar {
       display: flex;
       align-items: center;
       justify-content: space-between;
       width: 100%;
-      margin-top: 14px;
-      gap: 10px;
+      margin-top: 12px;
+      gap: 8px;
     }
 
     /* PENGUIN 1: PARTY HAT + HEART PHOTO LETTER */
     .p1-bday-banner {
       font-family: 'Fredoka', sans-serif;
-      font-size: clamp(2rem, 6vw, 2.7rem);
+      font-size: clamp(1.9rem, 6vw, 2.7rem);
       color: #e11d48;
       text-align: center;
       line-height: 1.05;
@@ -334,7 +358,7 @@
     .p1-letter-grid {
       display: grid;
       grid-template-columns: 1fr 1.35fr;
-      gap: 16px;
+      gap: 14px;
       align-items: center;
       width: 100%;
     }
@@ -344,93 +368,129 @@
       align-items: center;
     }
     .svg-heart-frame {
-      width: 185px;
-      height: 170px;
+      width: 100%;
+      max-width: 175px;
+      height: auto;
+      aspect-ratio: 200 / 185;
       filter: drop-shadow(0 8px 18px rgba(225, 29, 72, 0.22));
     }
     .heart-caption-hand {
       font-family: 'Caveat', cursive;
-      font-size: 1.75rem;
+      font-size: 1.65rem;
       color: #1f2937;
       margin-top: 2px;
       font-weight: 700;
     }
     .p1-letter-box {
       background: rgba(255, 255, 255, 0.94);
-      border-radius: 18px;
-      padding: 16px 18px;
+      border-radius: 16px;
+      padding: 14px 16px;
       border: 2px dashed #fda4af;
       text-align: center;
       box-shadow: 0 8px 24px rgba(225, 29, 72, 0.08);
     }
     .p1-letter-title {
       font-family: 'Fredoka', sans-serif;
-      font-size: 1.3rem;
+      font-size: 1.22rem;
       color: #f43f5e;
       letter-spacing: 1.5px;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
     .p1-letter-text {
       font-family: 'Caveat', cursive;
-      font-size: 1.32rem;
-      line-height: 1.45;
+      font-size: 1.25rem;
+      line-height: 1.4;
       color: #374151;
       white-space: pre-line;
     }
 
-    /* PENGUIN 3: 4 ROMANTIC SCENES */
+    /* PENGUIN 3 SCENE 1: 5 HEART PHOTOS COLLAGE (FIXED: Fluid responsive SVG widths so nothing overflows) */
     .p3-hearts-collage {
       width: 100%;
-      min-height: 310px;
       display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       grid-template-rows: auto auto;
       align-items: center;
       justify-items: center;
-      gap: 8px;
-      padding: 8px 4px;
+      gap: 6px;
+      padding: 6px 2px;
+    }
+    .p3-heart-svg-side {
+      width: 100%;
+      max-width: 104px;
+      height: auto;
+      aspect-ratio: 200 / 185;
+      display: block;
+      margin: 0 auto;
+    }
+    .p3-heart-svg-center {
+      width: 100%;
+      max-width: 120px;
+      height: auto;
+      aspect-ratio: 200 / 185;
+      display: block;
+      margin: 0 auto;
     }
     .p3-cursive-word {
       font-family: 'Sacramento', cursive;
-      font-size: clamp(2rem, 5vw, 2.65rem);
+      font-size: clamp(1.65rem, 5.2vw, 2.65rem);
       color: #be123c;
-      line-height: 1;
+      line-height: 1.05;
+      text-align: center;
+      word-break: break-word;
     }
     .p3-small-label {
       font-family: 'Caveat', cursive;
-      font-size: 1.25rem;
+      font-size: clamp(0.95rem, 3.3vw, 1.25rem);
       color: #881337;
       font-weight: 700;
+      white-space: nowrap;
     }
+
+    /* PENGUIN 3 SCENE 2: WILL YOU BE MINE? (FIXED: 3-column non-wrapping grid so circles stay on left & right) */
     .will-you-stage {
       background: radial-gradient(circle at center, #ffe4e6 0%, #fff1f2 75%);
-      border-radius: 24px;
-      padding: 16px 12px 20px;
+      border-radius: 22px;
+      padding: 14px 10px 18px;
       width: 100%;
       display: flex;
       flex-direction: column;
       align-items: center;
+      overflow: hidden;
     }
     .will-you-collage-row {
-      display: flex;
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr) auto;
       align-items: center;
-      justify-content: center;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin: 6px 0 10px;
+      justify-items: center;
+      gap: clamp(8px, 2.5vw, 16px);
+      width: 100%;
+      max-width: 440px;
+      margin: 4px 0 8px;
+    }
+    .will-you-main-heart {
+      width: 100%;
+      max-width: 175px;
+      height: auto;
+      aspect-ratio: 200 / 185;
+      filter: drop-shadow(0 10px 20px rgba(153, 27, 27, 0.22));
+      display: block;
     }
     .circle-mini-photo {
-      width: 70px;
-      height: 70px;
+      width: clamp(50px, 14vw, 70px);
+      height: clamp(50px, 14vw, 70px);
       border-radius: 50%;
       object-fit: cover;
-      border: 3px solid #fff;
+      border: 2.5px solid #fff;
       box-shadow: 0 6px 15px rgba(225, 29, 72, 0.2);
+      display: block;
     }
+
+    /* PENGUIN 3 SCENE 3 & 4 */
     .virtual-hug-stage {
       background: radial-gradient(circle at center, #ffe4e6 0%, #fff 75%);
-      border-radius: 24px;
-      padding: 18px 14px;
+      border-radius: 22px;
+      padding: 16px 12px;
       width: 100%;
       display: flex;
       flex-direction: column;
@@ -438,30 +498,30 @@
     }
     .miss-you-typewriter {
       font-family: 'Fredoka', sans-serif;
-      font-size: clamp(1.8rem, 5vw, 2.35rem);
+      font-size: clamp(1.65rem, 5vw, 2.35rem);
       color: #991b1b;
       letter-spacing: 3px;
-      min-height: 42px;
+      min-height: 40px;
       margin-top: 6px;
       font-weight: 700;
     }
     .iloveyou-card {
       width: 100%;
-      min-height: 310px;
+      min-height: 290px;
       background: #fffbeb;
-      border-radius: 24px;
+      border-radius: 22px;
       position: relative;
       overflow: hidden;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 30px 20px;
+      padding: 30px 16px;
       border: 2px solid #fed7aa;
     }
     .iloveyou-big-text {
       font-family: 'Fredoka', sans-serif;
-      font-size: clamp(2.8rem, 9vw, 4.6rem);
+      font-size: clamp(2.6rem, 9vw, 4.6rem);
       color: #c2410c;
       text-align: center;
       line-height: 1.1;
@@ -936,12 +996,43 @@
       cursor: pointer;
     }
 
+    /* MOBILE-SPECIFIC FRAME TUNING */
     @media (max-width: 580px) {
-      .p1-letter-grid { grid-template-columns: 1fr; }
-      .stage-card-frame { padding: 18px 12px 22px; min-height: 400px; }
-      .curved-header-text { font-size: 23px; }
-      .glossy-pill-btn { font-size: 1.3rem; padding: 9px 28px; min-width: 118px; }
-      .letter-envelope-wrapper { padding: 38px 18px 26px; }
+      body:has(#creator-bar) #stage-overlay {
+        padding-top: 96px;
+      }
+      .stage-card-frame {
+        padding: 16px 12px 18px;
+        min-height: 360px;
+        border-radius: 24px;
+      }
+      .p1-letter-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+      .svg-heart-frame {
+        max-width: 145px;
+      }
+      .heart-caption-hand {
+        font-size: 1.45rem;
+      }
+      .p1-letter-box {
+        padding: 12px 12px;
+      }
+      .p1-letter-text {
+        font-size: 1.15rem;
+      }
+      .curved-header-text {
+        font-size: 24px;
+      }
+      .glossy-pill-btn {
+        font-size: 1.25rem;
+        padding: 9px 26px;
+        min-width: 112px;
+      }
+      .letter-envelope-wrapper {
+        padding: 38px 18px 26px;
+      }
     }
   </style>
 </head>
@@ -949,7 +1040,7 @@
 
   <canvas id="confetti-canvas"></canvas>
 
-  <!-- SHARED SVG DEFINITIONS (Cross-Browser UserSpace Heart Clip + Gift Penguin Symbol) -->
+  <!-- SHARED SVG DEFINITIONS -->
   <svg width="0" height="0" style="position:absolute; pointer-events:none;">
     <defs>
       <clipPath id="heart-clip-200" clipPathUnits="userSpaceOnUse">
@@ -995,7 +1086,7 @@
         </svg>
 
         <div class="penguin-stage">
-          <svg viewBox="0 0 200 185" width="205" height="190">
+          <svg viewBox="0 0 200 185" width="195" height="180">
             <g class="floating-heart h1" transform="translate(36, 48)"><path d="M10 6 C10 2, 4 0, 0 5 C-4 0, -10 2, -10 6 C-10 12, 0 17, 0 21 C0 17, 10 12, 10 6 Z" fill="#f472b6"/></g>
             <g class="floating-heart h2" transform="translate(64, 24) scale(0.85)"><path d="M10 6 C10 2, 4 0, 0 5 C-4 0, -10 2, -10 6 C-10 12, 0 17, 0 21 C0 17, 10 12, 10 6 Z" fill="#f472b6"/></g>
             <g class="floating-heart h3" transform="translate(136, 24) scale(0.85)"><path d="M10 6 C10 2, 4 0, 0 5 C-4 0, -10 2, -10 6 C-10 12, 0 17, 0 21 C0 17, 10 12, 10 6 Z" fill="#f472b6"/></g>
@@ -1030,7 +1121,7 @@
         </svg>
 
         <div class="penguin-stage">
-          <svg viewBox="0 0 220 185" width="215" height="190">
+          <svg viewBox="0 0 220 185" width="205" height="180">
             <ellipse cx="110" cy="148" rx="76" ry="18" fill="#bae6fd" />
             <ellipse cx="110" cy="148" rx="62" ry="12" fill="#7dd3fc" opacity="0.6" />
             <g class="penguin-cry-group">
@@ -1049,27 +1140,27 @@
         </div>
 
         <div class="intro-btn-row">
-          <button class="glossy-pill-btn" style="min-width:210px;" onclick="goToStage('stage-yes-no')">TRY AGAIN</button>
+          <button class="glossy-pill-btn" style="min-width:200px;" onclick="goToStage('stage-yes-no')">TRY AGAIN</button>
         </div>
       </div>
 
-      <!-- SCREEN 2: CHOOSE A PENGUIN (3 PENGUINS) -->
+      <!-- SCREEN 2: CHOOSE A PENGUIN (3 PENGUINS SIDE-BY-SIDE) -->
       <div class="stage-screen" id="stage-choose-penguin">
         <div class="choose-penguin-title">Choose a penguin</div>
         <div class="choose-penguin-sub" id="typewriter-sub"></div>
 
         <div class="three-penguins-row">
           <div class="gift-penguin-item" id="peng-card-1" onclick="selectFirstPenguin()">
-            <svg width="126" height="148"><use href="#gift-penguin-symbol"/></svg>
-            <span class="gift-penguin-label">1. Birthday Note 💌</span>
+            <svg viewBox="0 0 140 165"><use href="#gift-penguin-symbol"/></svg>
+            <span class="gift-penguin-label">1. Note 💌</span>
           </div>
           <div class="gift-penguin-item" id="peng-card-2" onclick="selectSecondPenguin()">
-            <svg width="126" height="148"><use href="#gift-penguin-symbol"/></svg>
-            <span class="gift-penguin-label">2. Birthday World 🎂</span>
+            <svg viewBox="0 0 140 165"><use href="#gift-penguin-symbol"/></svg>
+            <span class="gift-penguin-label">2. World 🎂</span>
           </div>
           <div class="gift-penguin-item" id="peng-card-3" onclick="selectThirdPenguin()">
-            <svg width="126" height="148"><use href="#gift-penguin-symbol"/></svg>
-            <span class="gift-penguin-label">3. Special Question 💖</span>
+            <svg viewBox="0 0 140 165"><use href="#gift-penguin-symbol"/></svg>
+            <span class="gift-penguin-label">3. Question 💖</span>
           </div>
         </div>
       </div>
@@ -1077,7 +1168,7 @@
       <!-- PENGUIN 1 STEP A: PARTY HAT PENGUIN WITH CAKE -->
       <div class="stage-screen" id="stage-p1-splash">
         <div class="p1-bday-banner">HAPPY<br/>BIRTHDAY</div>
-        <svg viewBox="0 0 260 190" width="245" height="175">
+        <svg viewBox="0 0 260 190" style="width:100%; max-width:245px; height:auto;">
           <rect x="18" y="130" width="40" height="40" rx="4" fill="#fde047" stroke="#ca8a04" stroke-width="2"/>
           <rect x="35" y="130" width="6" height="40" fill="#e11d48"/>
           <rect x="195" y="125" width="45" height="45" rx="4" fill="#f9a8d4" stroke="#db2777" stroke-width="2"/>
@@ -1107,13 +1198,13 @@
         <div class="gingham-bg">
           <div class="p1-letter-grid">
             <div class="heart-photo-wrapper">
-              <div style="font-size:1.45rem; align-self:flex-start; margin-left:10px;">📷 ✨</div>
+              <div style="font-size:1.3rem; align-self:flex-start; margin-left:8px;">📷 ✨</div>
               <svg class="svg-heart-frame" viewBox="0 0 200 185">
                 <path d="M100,170 C100,170 12,115 12,59 C12,26 40,8 68,15 C84,19 100,34 100,34 C100,34 116,19 132,15 C160,8 188,26 188,59 C188,115 100,170 100,170 Z" fill="#fff" stroke="#f43f5e" stroke-width="6"/>
                 <image id="p1-heart-img" href="" width="200" height="185" preserveAspectRatio="xMidYMid slice" clip-path="url(#heart-clip-200)" />
               </svg>
               <div class="heart-caption-hand" id="p1-heart-caption">Cutie ❤️</div>
-              <div style="font-size:1.4rem; margin-top:4px;">🐰 🌸 🌼</div>
+              <div style="font-size:1.3rem; margin-top:2px;">🐰 🌸 🌼</div>
             </div>
 
             <div class="p1-letter-box">
@@ -1129,28 +1220,28 @@
         </div>
       </div>
 
-      <!-- PENGUIN 3 SCENE 1: 5 HEART PHOTOS COLLAGE -->
+      <!-- PENGUIN 3 SCENE 1: 5 HEART PHOTOS COLLAGE (FITS 100% INSIDE PHONE FRAME) -->
       <div class="stage-screen" id="stage-p3-scene1">
         <div class="gingham-bg">
           <div style="text-align:center;"><span class="p3-cursive-word" id="p3-top-word">Handsome</span></div>
           <div class="p3-hearts-collage">
-            <div style="text-align:center;">
-              <svg width="104" height="95" viewBox="0 0 200 185"><image id="p3-h-0" href="" width="200" height="185" preserveAspectRatio="xMidYMid slice" clip-path="url(#heart-clip-200)"/></svg>
+            <div style="text-align:center; width:100%;">
+              <svg class="p3-heart-svg-side" viewBox="0 0 200 185"><image id="p3-h-0" href="" width="200" height="185" preserveAspectRatio="xMidYMid slice" clip-path="url(#heart-clip-200)"/></svg>
               <div class="p3-small-label">my love ↗</div>
             </div>
-            <div style="text-align:center;">
-              <svg width="120" height="110" viewBox="0 0 200 185"><image id="p3-h-1" href="" width="200" height="185" preserveAspectRatio="xMidYMid slice" clip-path="url(#heart-clip-200)"/></svg>
+            <div style="text-align:center; width:100%;">
+              <svg class="p3-heart-svg-center" viewBox="0 0 200 185"><image id="p3-h-1" href="" width="200" height="185" preserveAspectRatio="xMidYMid slice" clip-path="url(#heart-clip-200)"/></svg>
             </div>
-            <div style="text-align:center;">
-              <svg width="104" height="95" viewBox="0 0 200 185"><image id="p3-h-2" href="" width="200" height="185" preserveAspectRatio="xMidYMid slice" clip-path="url(#heart-clip-200)"/></svg>
+            <div style="text-align:center; width:100%;">
+              <svg class="p3-heart-svg-side" viewBox="0 0 200 185"><image id="p3-h-2" href="" width="200" height="185" preserveAspectRatio="xMidYMid slice" clip-path="url(#heart-clip-200)"/></svg>
               <div class="p3-small-label">↖ my baby</div>
             </div>
-            <div style="text-align:center;">
-              <svg width="104" height="95" viewBox="0 0 200 185"><image id="p3-h-3" href="" width="200" height="185" preserveAspectRatio="xMidYMid slice" clip-path="url(#heart-clip-200)"/></svg>
+            <div style="text-align:center; width:100%;">
+              <svg class="p3-heart-svg-side" viewBox="0 0 200 185"><image id="p3-h-3" href="" width="200" height="185" preserveAspectRatio="xMidYMid slice" clip-path="url(#heart-clip-200)"/></svg>
             </div>
-            <div style="text-align:center;"><span class="p3-cursive-word" id="p3-bottom-word">boyfriend</span></div>
-            <div style="text-align:center;">
-              <svg width="104" height="95" viewBox="0 0 200 185"><image id="p3-h-4" href="" width="200" height="185" preserveAspectRatio="xMidYMid slice" clip-path="url(#heart-clip-200)"/></svg>
+            <div style="text-align:center; width:100%;"><span class="p3-cursive-word" id="p3-bottom-word">boyfriend</span></div>
+            <div style="text-align:center; width:100%;">
+              <svg class="p3-heart-svg-side" viewBox="0 0 200 185"><image id="p3-h-4" href="" width="200" height="185" preserveAspectRatio="xMidYMid slice" clip-path="url(#heart-clip-200)"/></svg>
             </div>
           </div>
         </div>
@@ -1160,10 +1251,10 @@
         </div>
       </div>
 
-      <!-- PENGUIN 3 SCENE 2: WILL YOU BE MINE? -->
+      <!-- PENGUIN 3 SCENE 2: WILL YOU BE MINE? (STAYS SIDE-BY-SIDE ON PHONES) -->
       <div class="stage-screen" id="stage-p3-scene2">
         <div class="will-you-stage">
-          <svg class="curved-header-svg" viewBox="0 0 420 85" style="height:75px;">
+          <svg class="curved-header-svg" viewBox="0 0 420 85">
             <defs><path id="arc-mine" d="M 40,72 Q 210,16 380,72" /></defs>
             <text class="curved-header-text" style="fill:#991b1b; font-size:28px;"><textPath href="#arc-mine" startOffset="50%" text-anchor="middle">Will you be mine?</textPath></text>
           </svg>
@@ -1172,7 +1263,7 @@
               <img id="p3-m-1" class="circle-mini-photo" src="" alt="Us 1" />
               <img id="p3-m-2" class="circle-mini-photo" src="" alt="Us 2" />
             </div>
-            <svg width="180" height="165" viewBox="0 0 200 185" style="filter:drop-shadow(0 10px 20px rgba(153,27,27,0.22));">
+            <svg class="will-you-main-heart" viewBox="0 0 200 185">
               <image id="p3-m-0" href="" width="200" height="185" preserveAspectRatio="xMidYMid slice" clip-path="url(#heart-clip-200)"/>
             </svg>
             <div style="display:flex; flex-direction:column; gap:10px;">
@@ -1191,11 +1282,11 @@
       <!-- PENGUIN 3 SCENE 3: VIRTUAL HUG FOR YA! + I MISS YOU -->
       <div class="stage-screen" id="stage-p3-scene3">
         <div class="virtual-hug-stage">
-          <svg class="curved-header-svg" viewBox="0 0 420 85" style="height:75px;">
+          <svg class="curved-header-svg" viewBox="0 0 420 85">
             <defs><path id="arc-hug" d="M 40,72 Q 210,16 380,72" /></defs>
             <text class="curved-header-text" style="fill:#991b1b; font-size:26px;"><textPath href="#arc-hug" startOffset="50%" text-anchor="middle">Virtual hug for ya!</textPath></text>
           </svg>
-          <svg viewBox="0 0 240 175" width="220" height="160">
+          <svg viewBox="0 0 240 175" style="width:100%; max-width:215px; height:auto;">
             <path d="M120,160 C120,160 25,105 25,52 C25,22 52,6 80,14 C100,20 120,38 120,38 C120,38 140,20 160,14 C188,6 215,22 215,52 C215,105 120,160 120,160 Z" fill="#ffe4e6" />
             <g class="penguin-happy-group">
               <circle cx="102" cy="76" r="28" fill="#fde047" stroke="#451a03" stroke-width="3"/>
@@ -1450,7 +1541,6 @@ YOU ❤️</div>
   </script>
 
   <script>
-    // Null-safe DOM helpers to prevent any runtime errors
     function setText(id, val) { const el = document.getElementById(id); if (el) el.textContent = val; }
     function setVal(id, val)  { const el = document.getElementById(id); if (el) el.value = val; }
     function getVal(id, fallback) { const el = document.getElementById(id); return el ? el.value : fallback; }
@@ -1468,6 +1558,8 @@ YOU ❤️</div>
       document.querySelectorAll('.stage-screen').forEach(el => el.classList.remove('active'));
       const target = document.getElementById(screenId);
       if (target) target.classList.add('active');
+      const frame = document.getElementById('stage-card-frame');
+      if (frame) frame.scrollTop = 0;
     }
 
     function triggerWhyNoScreen() {
