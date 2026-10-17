@@ -1,0 +1,1848 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>A Special Birthday Surprise For You 🎂🐧❤️</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,500;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Caveat:wght@600;700&family=Sacramento&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --rose-600: #e11d48;
+      --rose-500: #f43f5e;
+      --rose-400: #fb7185;
+      --rose-100: #ffe4e6;
+      --rose-50: #fff1f2;
+      --gold-500: #f59e0b;
+      --cream: #fffaf6;
+      --ink: #1f2937;
+      --muted: #6b7280;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--cream);
+      color: var(--ink);
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    #confetti-canvas {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    /* TOP CREATOR BAR (Removed automatically in exported file) */
+    #creator-bar {
+      position: fixed;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 9000;
+      background: rgba(17, 24, 39, 0.94);
+      backdrop-filter: blur(12px);
+      padding: 7px 13px;
+      border-radius: 999px;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      flex-wrap: wrap;
+      justify-content: center;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      width: max-content;
+      max-width: 96vw;
+    }
+
+    .c-btn {
+      border: none;
+      border-radius: 999px;
+      padding: 7px 14px;
+      font-family: inherit;
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      color: #fff;
+      transition: transform 0.15s ease, opacity 0.15s ease;
+    }
+    .c-btn.primary { background: linear-gradient(135deg, #e11d48, #f43f5e); }
+    .c-btn.export  { background: linear-gradient(135deg, #059669, #10b981); }
+    .c-btn.ghost   { background: rgba(255, 255, 255, 0.16); }
+    .c-btn:hover   { transform: translateY(-1px); opacity: 0.95; }
+
+    /* STAGE OVERLAY FOR PENGUIN SCREENS */
+    #stage-overlay {
+      position: fixed;
+      inset: 0;
+      background: #0f0f12;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px;
+      z-index: 5000;
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    #stage-overlay.hidden {
+      opacity: 0;
+      pointer-events: none;
+      transform: scale(1.04);
+    }
+
+    .stage-card-frame {
+      background: #ffffff;
+      width: 100%;
+      max-width: 680px;
+      min-height: 440px;
+      max-height: 90vh;
+      border-radius: 30px;
+      border: 3px solid #1f2937;
+      box-shadow: 0 24px 65px rgba(0, 0, 0, 0.65), inset 0 0 0 4px #f3f4f6;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 20px 28px;
+      position: relative;
+      overflow-y: auto;
+      overflow-x: hidden;
+      user-select: none;
+    }
+
+    .stage-card-frame.shake { animation: shakeCard 0.45s ease; }
+    @keyframes shakeCard {
+      0%, 100% { transform: translateX(0); }
+      20% { transform: translateX(-10px) rotate(-1deg); }
+      40% { transform: translateX(10px) rotate(1deg); }
+      60% { transform: translateX(-8px); }
+      80% { transform: translateX(8px); }
+    }
+
+    .stage-screen {
+      width: 100%;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      animation: fadeSlideIn 0.35s ease;
+    }
+    .stage-screen.active { display: flex; }
+    @keyframes fadeSlideIn {
+      from { opacity: 0; transform: translateY(8px) scale(0.98); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .gingham-bg {
+      background-color: #ffffff;
+      background-image:
+        linear-gradient(90deg, rgba(244, 162, 184, 0.22) 50%, transparent 50%),
+        linear-gradient(rgba(244, 162, 184, 0.22) 50%, transparent 50%);
+      background-size: 36px 36px;
+      border-radius: 22px;
+      padding: 18px 14px;
+      width: 100%;
+      position: relative;
+    }
+
+    /* STAGE 1: PLS ACCEPT THE GIFT */
+    .curved-header-svg {
+      width: 100%;
+      max-width: 420px;
+      height: 88px;
+      overflow: visible;
+      margin-bottom: -10px;
+    }
+    .curved-header-text {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 26px;
+      font-weight: 600;
+      fill: #1f2937;
+      letter-spacing: 2.2px;
+    }
+    .penguin-stage {
+      width: 210px;
+      height: 190px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      margin: 2px 0 14px;
+    }
+    .floating-heart {
+      animation: floatHeart 2.2s ease-in-out infinite;
+      transform-origin: center;
+    }
+    .floating-heart.h1 { animation-delay: 0s; }
+    .floating-heart.h2 { animation-delay: 0.4s; }
+    .floating-heart.h3 { animation-delay: 0.8s; }
+    .floating-heart.h4 { animation-delay: 1.2s; }
+    @keyframes floatHeart {
+      0%, 100% { transform: translateY(0) scale(0.95); opacity: 0.85; }
+      50% { transform: translateY(-7px) scale(1.12); opacity: 1; }
+    }
+    .penguin-happy-group {
+      transform-origin: 100px 145px;
+      animation: penguinWaddle 1.8s ease-in-out infinite;
+    }
+    @keyframes penguinWaddle {
+      0%, 100% { transform: rotate(-4deg); }
+      50% { transform: rotate(4deg); }
+    }
+    .penguin-cry-group {
+      transform-origin: 110px 120px;
+      animation: penguinSob 0.45s ease-in-out infinite;
+    }
+    @keyframes penguinSob {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-3px) rotate(-1.5deg); }
+    }
+
+    .intro-btn-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+      width: 100%;
+      margin-top: 6px;
+    }
+    .glossy-pill-btn {
+      position: relative;
+      background: #d92323;
+      color: #ffffff;
+      font-family: 'Fredoka', sans-serif;
+      font-size: 1.48rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      padding: 10px 36px;
+      min-width: 132px;
+      border-radius: 999px;
+      border: 3px solid #2b1d1d;
+      box-shadow: 0 5px 0 #7f1d1d, 0 8px 16px rgba(217, 35, 35, 0.35);
+      cursor: pointer;
+      transition: transform 0.12s ease, background 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-transform: uppercase;
+    }
+    .glossy-pill-btn::after {
+      content: "";
+      position: absolute;
+      right: 10px;
+      top: 7px;
+      bottom: 7px;
+      width: 15px;
+      border-right: 4px solid rgba(255, 255, 255, 0.92);
+      border-top: 2px solid rgba(255, 255, 255, 0.92);
+      border-bottom: 2px solid rgba(255, 255, 255, 0.92);
+      border-radius: 0 999px 999px 0;
+      pointer-events: none;
+    }
+    .glossy-pill-btn:hover { background: #ef2323; transform: translateY(-2px); }
+    .glossy-pill-btn:active { transform: translateY(3px); box-shadow: 0 2px 0 #7f1d1d; }
+
+    /* STAGE 2: CHOOSE A PENGUIN */
+    .choose-penguin-title {
+      font-family: 'Fredoka', sans-serif;
+      font-size: clamp(1.35rem, 4vw, 1.75rem);
+      color: #7c2d12;
+      text-align: center;
+      margin-bottom: 6px;
+    }
+    .choose-penguin-sub {
+      font-family: 'Fredoka', sans-serif;
+      font-size: clamp(1rem, 3.2vw, 1.28rem);
+      color: #9a3412;
+      text-align: center;
+      min-height: 30px;
+      margin-bottom: 20px;
+    }
+    .three-penguins-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: clamp(14px, 4vw, 36px);
+      flex-wrap: wrap;
+      width: 100%;
+      padding: 6px 0 10px;
+    }
+    .gift-penguin-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      cursor: pointer;
+      opacity: 0;
+      transform: translateY(18px) scale(0.9);
+      transition: transform 0.25s ease, opacity 0.4s ease;
+    }
+    .gift-penguin-item.pop-visible { opacity: 1; transform: translateY(0) scale(1); }
+    .gift-penguin-item:hover { transform: translateY(-8px) scale(1.05); }
+    .gift-penguin-label {
+      margin-top: 8px;
+      font-family: 'Fredoka', sans-serif;
+      font-size: 0.84rem;
+      color: #be123c;
+      background: #fff1f2;
+      padding: 4px 12px;
+      border-radius: 999px;
+      border: 1px solid #fecdd3;
+      font-weight: 600;
+    }
+
+    .corner-nav-btn {
+      background: #fde68a;
+      color: #92400e;
+      border: 2px solid #b45309;
+      border-radius: 999px;
+      padding: 7px 15px;
+      font-family: 'Fredoka', sans-serif;
+      font-size: 0.84rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 3px 0 #b45309;
+    }
+    .stage-nav-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      margin-top: 14px;
+      gap: 10px;
+    }
+
+    /* PENGUIN 1: PARTY HAT + HEART PHOTO LETTER */
+    .p1-bday-banner {
+      font-family: 'Fredoka', sans-serif;
+      font-size: clamp(2rem, 6vw, 2.7rem);
+      color: #e11d48;
+      text-align: center;
+      line-height: 1.05;
+      letter-spacing: 2px;
+      text-shadow: 2px 2px 0 #fecdd3;
+      margin-bottom: 8px;
+    }
+    .p1-letter-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.35fr;
+      gap: 16px;
+      align-items: center;
+      width: 100%;
+    }
+    .heart-photo-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .svg-heart-frame {
+      width: 185px;
+      height: 170px;
+      filter: drop-shadow(0 8px 18px rgba(225, 29, 72, 0.22));
+    }
+    .heart-caption-hand {
+      font-family: 'Caveat', cursive;
+      font-size: 1.75rem;
+      color: #1f2937;
+      margin-top: 2px;
+      font-weight: 700;
+    }
+    .p1-letter-box {
+      background: rgba(255, 255, 255, 0.94);
+      border-radius: 18px;
+      padding: 16px 18px;
+      border: 2px dashed #fda4af;
+      text-align: center;
+      box-shadow: 0 8px 24px rgba(225, 29, 72, 0.08);
+    }
+    .p1-letter-title {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 1.3rem;
+      color: #f43f5e;
+      letter-spacing: 1.5px;
+      margin-bottom: 8px;
+    }
+    .p1-letter-text {
+      font-family: 'Caveat', cursive;
+      font-size: 1.32rem;
+      line-height: 1.45;
+      color: #374151;
+      white-space: pre-line;
+    }
+
+    /* PENGUIN 3: 4 ROMANTIC SCENES */
+    .p3-hearts-collage {
+      width: 100%;
+      min-height: 310px;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-rows: auto auto;
+      align-items: center;
+      justify-items: center;
+      gap: 8px;
+      padding: 8px 4px;
+    }
+    .p3-cursive-word {
+      font-family: 'Sacramento', cursive;
+      font-size: clamp(2rem, 5vw, 2.65rem);
+      color: #be123c;
+      line-height: 1;
+    }
+    .p3-small-label {
+      font-family: 'Caveat', cursive;
+      font-size: 1.25rem;
+      color: #881337;
+      font-weight: 700;
+    }
+    .will-you-stage {
+      background: radial-gradient(circle at center, #ffe4e6 0%, #fff1f2 75%);
+      border-radius: 24px;
+      padding: 16px 12px 20px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .will-you-collage-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin: 6px 0 10px;
+    }
+    .circle-mini-photo {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid #fff;
+      box-shadow: 0 6px 15px rgba(225, 29, 72, 0.2);
+    }
+    .virtual-hug-stage {
+      background: radial-gradient(circle at center, #ffe4e6 0%, #fff 75%);
+      border-radius: 24px;
+      padding: 18px 14px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .miss-you-typewriter {
+      font-family: 'Fredoka', sans-serif;
+      font-size: clamp(1.8rem, 5vw, 2.35rem);
+      color: #991b1b;
+      letter-spacing: 3px;
+      min-height: 42px;
+      margin-top: 6px;
+      font-weight: 700;
+    }
+    .iloveyou-card {
+      width: 100%;
+      min-height: 310px;
+      background: #fffbeb;
+      border-radius: 24px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 30px 20px;
+      border: 2px solid #fed7aa;
+    }
+    .iloveyou-big-text {
+      font-family: 'Fredoka', sans-serif;
+      font-size: clamp(2.8rem, 9vw, 4.6rem);
+      color: #c2410c;
+      text-align: center;
+      line-height: 1.1;
+      letter-spacing: 3px;
+      z-index: 2;
+      white-space: pre-line;
+    }
+
+    /* FLOATING BUTTONS FOR PENGUIN 2 INNER SITE */
+    #back-to-penguins-fab {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      z-index: 4500;
+      background: #1f2937;
+      color: #ffffff;
+      border: 2px solid #ffffff;
+      border-radius: 999px;
+      padding: 11px 18px;
+      font-family: 'Fredoka', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 600;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+      cursor: pointer;
+    }
+    .floating-party-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 4500;
+      background: linear-gradient(135deg, var(--rose-600), var(--gold-500));
+      color: #fff;
+      border: none;
+      border-radius: 999px;
+      padding: 11px 18px;
+      font-weight: 700;
+      font-size: 0.88rem;
+      box-shadow: 0 10px 25px rgba(225, 29, 72, 0.35);
+      cursor: pointer;
+    }
+
+    /* PENGUIN 2: FULL INNER BIRTHDAY WEBSITE */
+    .hero-wrap {
+      min-height: 100vh;
+      padding: 95px 20px 65px;
+      background:
+        radial-gradient(circle at 15% 20%, rgba(251, 113, 133, 0.18), transparent 40%),
+        radial-gradient(circle at 85% 30%, rgba(252, 211, 77, 0.22), transparent 45%),
+        linear-gradient(180deg, #fff1f2 0%, #fffaf6 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    .hero-pill {
+      background: #fff;
+      color: var(--rose-600);
+      padding: 8px 20px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 0.84rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      box-shadow: 0 6px 20px rgba(225, 29, 72, 0.12);
+      border: 1px solid #fecdd3;
+      margin-bottom: 18px;
+    }
+    .hero-main-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.3rem, 7vw, 4.3rem);
+      color: #881337;
+      line-height: 1.12;
+      max-width: 820px;
+      margin-bottom: 14px;
+    }
+    .hero-main-title span { color: var(--rose-600); font-style: italic; }
+    .hero-subtext {
+      font-size: clamp(1rem, 2.8vw, 1.18rem);
+      color: #4b5563;
+      max-width: 600px;
+      line-height: 1.65;
+      margin-bottom: 30px;
+    }
+    .cake-stage-card {
+      background: rgba(255, 255, 255, 0.94);
+      border: 2px solid #fecdd3;
+      border-radius: 30px;
+      padding: 28px 20px;
+      max-width: 470px;
+      width: 100%;
+      box-shadow: 0 22px 50px rgba(136, 19, 55, 0.1);
+    }
+    .cake-badge {
+      display: inline-block;
+      background: var(--rose-50);
+      color: var(--rose-600);
+      font-weight: 700;
+      font-size: 0.86rem;
+      padding: 6px 15px;
+      border-radius: 999px;
+      margin-bottom: 12px;
+    }
+    .cake-svg-container { cursor: pointer; user-select: none; margin: 0 auto; }
+    .flame-group {
+      transform-origin: center bottom;
+      animation: candleFlicker 0.85s ease-in-out infinite alternate;
+      cursor: pointer;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+    .flame-group.out { opacity: 0; transform: scale(0); pointer-events: none; }
+    @keyframes candleFlicker {
+      0% { transform: scale(1) rotate(-3deg); }
+      100% { transform: scale(1.1) rotate(3deg); }
+    }
+    .blow-btn {
+      margin-top: 12px;
+      background: linear-gradient(135deg, var(--rose-600), var(--rose-500));
+      color: #fff;
+      border: none;
+      padding: 11px 22px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 0.92rem;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(225, 29, 72, 0.28);
+    }
+    .secret-wish-box {
+      margin-top: 18px;
+      background: linear-gradient(135deg, #fff1f2, #fef3c7);
+      border: 2px dashed var(--rose-400);
+      border-radius: 18px;
+      padding: 16px;
+      display: none;
+    }
+    .secret-wish-box.revealed { display: block; }
+    .secret-wish-label {
+      font-size: 0.76rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--rose-600);
+      margin-bottom: 5px;
+    }
+    .secret-wish-text {
+      font-family: 'Caveat', cursive;
+      font-size: 1.6rem;
+      color: #881337;
+      line-height: 1.35;
+    }
+
+    .section-block { max-width: 1060px; margin: 0 auto; padding: 70px 20px; }
+    .section-eyebrow {
+      text-align: center;
+      color: var(--rose-600);
+      font-weight: 700;
+      font-size: 0.84rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: 8px;
+    }
+    .section-title {
+      text-align: center;
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.9rem, 5vw, 2.9rem);
+      color: #881337;
+      margin-bottom: 10px;
+    }
+    .section-desc {
+      text-align: center;
+      color: var(--muted);
+      max-width: 550px;
+      margin: 0 auto 40px;
+      line-height: 1.6;
+    }
+
+    .scrapbook-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(255px, 1fr));
+      gap: 30px;
+    }
+    .polaroid-item {
+      background: #ffffff;
+      padding: 15px 15px 24px;
+      border-radius: 14px;
+      box-shadow: 0 15px 35px rgba(31, 41, 55, 0.1);
+      border: 1px solid #f3f4f6;
+      position: relative;
+      transition: transform 0.25s ease;
+      cursor: pointer;
+    }
+    .polaroid-item:nth-child(3n+1) { transform: rotate(-2deg); }
+    .polaroid-item:nth-child(3n+2) { transform: rotate(1.8deg); }
+    .polaroid-item:nth-child(3n)   { transform: rotate(-1.2deg); }
+    .polaroid-item:hover { transform: rotate(0deg) translateY(-5px) scale(1.02); z-index: 3; }
+    .washi-tape {
+      position: absolute;
+      top: -11px;
+      left: 50%;
+      transform: translateX(-50%) rotate(-3deg);
+      width: 92px;
+      height: 24px;
+      background: rgba(251, 113, 133, 0.38);
+      z-index: 2;
+    }
+    .polaroid-photo-frame {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      border-radius: 8px;
+      overflow: hidden;
+      background: #ffe4e6;
+      margin-bottom: 12px;
+    }
+    .polaroid-photo-frame img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .polaroid-caption-text {
+      font-family: 'Caveat', cursive;
+      font-size: 1.5rem;
+      color: #1f2937;
+      text-align: center;
+    }
+    .polaroid-date-tag {
+      display: block;
+      text-align: center;
+      font-size: 0.74rem;
+      color: #9ca3af;
+      margin-top: 5px;
+      font-weight: 600;
+    }
+
+    .reasons-section-bg {
+      background: linear-gradient(180deg, #fffaf6 0%, #fff1f2 50%, #fffaf6 100%);
+    }
+    .reasons-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 20px;
+    }
+    .reason-card {
+      background: #ffffff;
+      border-radius: 22px;
+      padding: 26px 20px;
+      text-align: center;
+      border: 2px solid #ffe4e6;
+      box-shadow: 0 12px 28px rgba(136, 19, 55, 0.06);
+      cursor: pointer;
+      min-height: 180px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .reason-card.flipped {
+      background: linear-gradient(135deg, #fff1f2, #ffffff);
+      border-color: var(--rose-500);
+    }
+    .reason-icon { font-size: 2.1rem; margin-bottom: 8px; }
+    .reason-front-title { font-weight: 700; color: #881337; font-size: 1.02rem; margin-bottom: 6px; }
+    .reason-tap-hint { font-size: 0.76rem; color: var(--rose-500); font-weight: 600; }
+    .reason-back-text {
+      display: none;
+      font-family: 'Caveat', cursive;
+      font-size: 1.5rem;
+      color: #881337;
+      line-height: 1.35;
+    }
+    .reason-card.flipped .reason-front-title,
+    .reason-card.flipped .reason-tap-hint { display: none; }
+    .reason-card.flipped .reason-back-text { display: block; }
+
+    .letter-envelope-wrapper {
+      max-width: 700px;
+      margin: 0 auto;
+      background: #ffffff;
+      border-radius: 26px;
+      padding: 44px 32px 38px;
+      box-shadow: 0 22px 55px rgba(136, 19, 55, 0.1);
+      border: 2px solid #fecdd3;
+      position: relative;
+    }
+    .wax-seal-badge {
+      width: 60px;
+      height: 60px;
+      background: radial-gradient(circle at 30% 30%, #f43f5e, #9f1239);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 1.5rem;
+      margin: -72px auto 20px;
+    }
+    .letter-Inner-paper {
+      background: rgba(255, 255, 255, 0.96);
+      padding: 24px;
+      border-radius: 16px;
+      border: 1px dashed #fda4af;
+    }
+    .letter-greeting {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.45rem;
+      font-weight: 700;
+      color: #881337;
+      margin-bottom: 12px;
+    }
+    .letter-content-body {
+      font-family: 'Caveat', cursive;
+      font-size: 1.65rem;
+      line-height: 1.58;
+      color: #1f2937;
+      white-space: pre-line;
+    }
+    .letter-signature {
+      margin-top: 22px;
+      text-align: right;
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-weight: 700;
+      font-size: 1.3rem;
+      color: var(--rose-600);
+    }
+
+    .finale-banner { text-align: center; padding: 35px 20px 105px; }
+    .hug-btn {
+      background: linear-gradient(135deg, #e11d48, #fb7185);
+      color: #fff;
+      border: none;
+      padding: 15px 34px;
+      border-radius: 999px;
+      font-size: 1.08rem;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 14px 32px rgba(225, 29, 72, 0.35);
+    }
+    .hug-feedback {
+      margin-top: 14px;
+      font-family: 'Caveat', cursive;
+      font-size: 1.65rem;
+      color: var(--rose-600);
+      display: none;
+    }
+
+    /* LIGHTBOX & CUSTOMIZER MODALS */
+    #lightbox-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 15, 18, 0.88);
+      backdrop-filter: blur(8px);
+      z-index: 9500;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    #lightbox-modal.open { display: flex; }
+    .lightbox-card {
+      background: #fff;
+      padding: 16px 16px 22px;
+      border-radius: 18px;
+      max-width: 500px;
+      width: 100%;
+      text-align: center;
+      position: relative;
+    }
+    .lightbox-card img {
+      width: 100%;
+      max-height: 68vh;
+      object-fit: contain;
+      border-radius: 10px;
+      margin-bottom: 10px;
+    }
+    .lightbox-caption { font-family: 'Caveat', cursive; font-size: 1.65rem; color: #1f2937; }
+
+    .studio-modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(17, 24, 39, 0.78);
+      backdrop-filter: blur(6px);
+      z-index: 9200;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 14px;
+    }
+    .studio-modal-backdrop.open { display: flex; }
+    .studio-modal-box {
+      background: #ffffff;
+      width: 100%;
+      max-width: 680px;
+      max-height: 90vh;
+      border-radius: 24px;
+      padding: 22px;
+      overflow-y: auto;
+      box-shadow: 0 25px 65px rgba(0, 0, 0, 0.45);
+    }
+    .studio-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #e5e7eb;
+      padding-bottom: 12px;
+      margin-bottom: 14px;
+    }
+    .close-circle-btn {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      border: none;
+      background: #f3f4f6;
+      font-size: 1.05rem;
+      cursor: pointer;
+    }
+    .privacy-banner {
+      background: #ecfdf5;
+      border: 1px solid #a7f3d0;
+      color: #065f46;
+      padding: 10px 14px;
+      border-radius: 12px;
+      font-size: 0.82rem;
+      line-height: 1.45;
+      margin-bottom: 14px;
+    }
+    .studio-field { margin-bottom: 14px; }
+    .studio-field label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #374151;
+      margin-bottom: 5px;
+    }
+    .studio-field input, .studio-field textarea {
+      width: 100%;
+      padding: 9px 12px;
+      border: 1px solid #d1d5db;
+      border-radius: 10px;
+      font-family: inherit;
+      font-size: 0.92rem;
+    }
+    .photo-editor-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+      padding: 9px;
+      border-radius: 12px;
+      margin-bottom: 8px;
+    }
+    .photo-editor-row img {
+      width: 58px;
+      height: 58px;
+      border-radius: 8px;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+    .delete-slot-btn {
+      background: #fee2e2;
+      color: #b91c1c;
+      border: none;
+      border-radius: 8px;
+      padding: 6px 10px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .add-slot-btn {
+      width: 100%;
+      background: #fff1f2;
+      color: var(--rose-600);
+      border: 2px dashed #fda4af;
+      padding: 9px;
+      border-radius: 12px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    @media (max-width: 580px) {
+      .p1-letter-grid { grid-template-columns: 1fr; }
+      .stage-card-frame { padding: 18px 12px 22px; min-height: 400px; }
+      .curved-header-text { font-size: 23px; }
+      .glossy-pill-btn { font-size: 1.3rem; padding: 9px 28px; min-width: 118px; }
+      .letter-envelope-wrapper { padding: 38px 18px 26px; }
+    }
+  </style>
+</head>
+<body>
+
+  <canvas id="confetti-canvas"></canvas>
+
+  <!-- SHARED SVG DEFINITIONS (Cross-Browser UserSpace Heart Clip + Gift Penguin Symbol) -->
+  <svg width="0" height="0" style="position:absolute; pointer-events:none;">
+    <defs>
+      <clipPath id="heart-clip-200" clipPathUnits="userSpaceOnUse">
+        <path d="M100,170 C100,170 12,115 12,59 C12,26 40,8 68,15 C84,19 100,34 100,34 C100,34 116,19 132,15 C160,8 188,26 188,59 C188,115 100,170 100,170 Z" />
+      </clipPath>
+
+      <symbol id="gift-penguin-symbol" viewBox="0 0 140 165">
+        <ellipse cx="70" cy="154" rx="42" ry="7" fill="#f3f4f6"/>
+        <path d="M26 110 C22 54, 42 28, 70 28 C98 28, 118 54, 114 110 C112 142, 96 152, 70 152 C44 152, 28 142, 26 110 Z" fill="#4a3f3f" stroke="#27272a" stroke-width="3"/>
+        <path d="M34 114 C32 76, 46 54, 70 54 C94 54, 108 76, 106 114 C105 140, 92 150, 70 150 C48 150, 35 140, 34 114 Z" fill="#ffffff"/>
+        <path d="M48 52 Q54 44 60 52" fill="none" stroke="#27272a" stroke-width="3" stroke-linecap="round"/>
+        <path d="M80 52 Q86 44 92 52" fill="none" stroke="#27272a" stroke-width="3" stroke-linecap="round"/>
+        <ellipse cx="44" cy="60" rx="7" ry="4.5" fill="#fda4af"/>
+        <ellipse cx="96" cy="60" rx="7" ry="4.5" fill="#fda4af"/>
+        <ellipse cx="70" cy="56" rx="6" ry="4" fill="#fb923c" stroke="#27272a" stroke-width="2"/>
+        <rect x="46" y="76" width="48" height="44" rx="5" fill="#fbcfe8" stroke="#be185d" stroke-width="2.5"/>
+        <rect x="43" y="70" width="54" height="12" rx="4" fill="#f9a8d4" stroke="#be185d" stroke-width="2.5"/>
+        <rect x="65" y="70" width="10" height="50" fill="#e11d48"/>
+        <rect x="46" y="92" width="48" height="9" fill="#e11d48"/>
+        <path d="M70 70 C56 56, 48 68, 66 70 Z" fill="#e11d48" stroke="#881337" stroke-width="2"/>
+        <path d="M70 70 C84 56, 92 68, 74 70 Z" fill="#e11d48" stroke="#881337" stroke-width="2"/>
+      </symbol>
+    </defs>
+  </svg>
+
+  <!-- CREATOR TOP BAR (Removed automatically on Export) -->
+  <div id="creator-bar">
+    <button class="c-btn primary" onclick="openCustomizerModal()">🎨 Customize & Add Photos</button>
+    <button class="c-btn export" onclick="openSaveModal()">🎁 Save / Send to Boyfriend</button>
+    <button class="c-btn ghost" onclick="goToStage('stage-yes-no')">🐧 Restart Intro</button>
+    <button class="c-btn ghost" onclick="openChoosePenguinHub()">🎁 3 Penguins Hub</button>
+  </div>
+
+  <!-- INTERACTIVE PENGUIN STAGE OVERLAY -->
+  <div id="stage-overlay">
+    <div class="stage-card-frame" id="stage-card-frame">
+
+      <!-- SCREEN 1A: PLS ACCEPT THE GIFT -->
+      <div class="stage-screen active" id="stage-yes-no">
+        <svg class="curved-header-svg" viewBox="0 0 420 95">
+          <defs><path id="arc-ask" d="M 30,82 Q 210,18 390,82" /></defs>
+          <text class="curved-header-text"><textPath href="#arc-ask" startOffset="50%" text-anchor="middle">PLS ACCEPT THE GIFT</textPath></text>
+        </svg>
+
+        <div class="penguin-stage">
+          <svg viewBox="0 0 200 185" width="205" height="190">
+            <g class="floating-heart h1" transform="translate(36, 48)"><path d="M10 6 C10 2, 4 0, 0 5 C-4 0, -10 2, -10 6 C-10 12, 0 17, 0 21 C0 17, 10 12, 10 6 Z" fill="#f472b6"/></g>
+            <g class="floating-heart h2" transform="translate(64, 24) scale(0.85)"><path d="M10 6 C10 2, 4 0, 0 5 C-4 0, -10 2, -10 6 C-10 12, 0 17, 0 21 C0 17, 10 12, 10 6 Z" fill="#f472b6"/></g>
+            <g class="floating-heart h3" transform="translate(136, 24) scale(0.85)"><path d="M10 6 C10 2, 4 0, 0 5 C-4 0, -10 2, -10 6 C-10 12, 0 17, 0 21 C0 17, 10 12, 10 6 Z" fill="#f472b6"/></g>
+            <g class="floating-heart h4" transform="translate(164, 48)"><path d="M10 6 C10 2, 4 0, 0 5 C-4 0, -10 2, -10 6 C-10 12, 0 17, 0 21 C0 17, 10 12, 10 6 Z" fill="#f472b6"/></g>
+            <ellipse cx="100" cy="166" rx="46" ry="8" fill="#e5e7eb" />
+            <g class="penguin-happy-group">
+              <ellipse cx="82" cy="162" rx="11" ry="5.5" fill="#fbbf24" stroke="#374151" stroke-width="2.5"/>
+              <ellipse cx="118" cy="162" rx="11" ry="5.5" fill="#fbbf24" stroke="#374151" stroke-width="2.5"/>
+              <path d="M 54 115 C 52 65, 72 45, 100 45 C 128 45, 148 65, 146 115 C 145 148, 128 162, 100 162 C 72 162, 55 148, 54 115 Z" fill="#9ca3af" stroke="#374151" stroke-width="3" />
+              <path d="M 64 118 C 64 82, 78 68, 100 68 C 122 68, 136 82, 136 118 C 136 146, 122 158, 100 158 C 78 158, 64 146, 64 118 Z" fill="#ffffff" />
+              <circle cx="83" cy="95" r="4.2" fill="#1f2937" /><circle cx="81.5" cy="93.5" r="1.4" fill="#ffffff" />
+              <circle cx="117" cy="95" r="4.2" fill="#1f2937" /><circle cx="115.5" cy="93.5" r="1.4" fill="#ffffff" />
+              <ellipse cx="71" cy="103" rx="8.5" ry="5" fill="#fda4af" /><ellipse cx="129" cy="103" rx="8.5" ry="5" fill="#fda4af" />
+              <ellipse cx="100" cy="100" rx="5.5" ry="4" fill="#fde047" stroke="#374151" stroke-width="2" />
+              <path d="M 55 116 C 48 102, 64 96, 73 108 C 77 114, 68 126, 55 116 Z" fill="#9ca3af" stroke="#374151" stroke-width="2.8" />
+              <path d="M 145 116 C 152 102, 136 96, 127 108 C 123 114, 132 126, 145 116 Z" fill="#9ca3af" stroke="#374151" stroke-width="2.8" />
+            </g>
+          </svg>
+        </div>
+
+        <div class="intro-btn-row">
+          <button class="glossy-pill-btn" onclick="openChoosePenguinHub()">YES</button>
+          <button class="glossy-pill-btn" onclick="triggerWhyNoScreen()">NO</button>
+        </div>
+      </div>
+
+      <!-- SCREEN 1B: WHY DID YOU CLICK NO! -->
+      <div class="stage-screen" id="stage-why-no">
+        <svg class="curved-header-svg" viewBox="0 0 420 95">
+          <defs><path id="arc-no" d="M 20,84 Q 210,16 400,84" /></defs>
+          <text class="curved-header-text"><textPath href="#arc-no" startOffset="50%" text-anchor="middle">WHY DID YOU CLICK NO!</textPath></text>
+        </svg>
+
+        <div class="penguin-stage">
+          <svg viewBox="0 0 220 185" width="215" height="190">
+            <ellipse cx="110" cy="148" rx="76" ry="18" fill="#bae6fd" />
+            <ellipse cx="110" cy="148" rx="62" ry="12" fill="#7dd3fc" opacity="0.6" />
+            <g class="penguin-cry-group">
+              <path d="M 118 68 C 95 45, 55 60, 44 128 C 40 144, 65 152, 85 146" fill="none" stroke="#60a5fa" stroke-width="14" stroke-linecap="round" opacity="0.85" />
+              <path d="M 126 98 C 102 115, 75 135, 62 152" fill="none" stroke="#38bdf8" stroke-width="12" stroke-linecap="round" opacity="0.9" />
+              <ellipse cx="112" cy="112" rx="52" ry="42" transform="rotate(-12 112 112)" fill="#9ca3af" stroke="#374151" stroke-width="3" />
+              <ellipse cx="122" cy="114" rx="38" ry="33" transform="rotate(-12 122 114)" fill="#ffffff" />
+              <path d="M 122 86 L 130 93 L 120 97" fill="none" stroke="#1f2937" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M 136 108 L 144 114 L 134 119" fill="none" stroke="#1f2937" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="115" cy="96" r="6" fill="#fda4af" /><circle cx="132" cy="126" r="6" fill="#fda4af" />
+              <ellipse cx="134" cy="102" rx="5.5" ry="4.5" fill="#fde047" stroke="#374151" stroke-width="2" />
+              <ellipse cx="62" cy="128" rx="9" ry="5" transform="rotate(-25 62 128)" fill="#fbbf24" stroke="#374151" stroke-width="2.5"/>
+              <ellipse cx="68" cy="140" rx="9" ry="5" transform="rotate(10 68 140)" fill="#fbbf24" stroke="#374151" stroke-width="2.5"/>
+            </g>
+          </svg>
+        </div>
+
+        <div class="intro-btn-row">
+          <button class="glossy-pill-btn" style="min-width:210px;" onclick="goToStage('stage-yes-no')">TRY AGAIN</button>
+        </div>
+      </div>
+
+      <!-- SCREEN 2: CHOOSE A PENGUIN (3 PENGUINS) -->
+      <div class="stage-screen" id="stage-choose-penguin">
+        <div class="choose-penguin-title">Choose a penguin</div>
+        <div class="choose-penguin-sub" id="typewriter-sub"></div>
+
+        <div class="three-penguins-row">
+          <div class="gift-penguin-item" id="peng-card-1" onclick="selectFirstPenguin()">
+            <svg width="126" height="148"><use href="#gift-penguin-symbol"/></svg>
+            <span class="gift-penguin-label">1. Birthday Note 💌</span>
+          </div>
+          <div class="gift-penguin-item" id="peng-card-2" onclick="selectSecondPenguin()">
+            <svg width="126" height="148"><use href="#gift-penguin-symbol"/></svg>
+            <span class="gift-penguin-label">2. Birthday World 🎂</span>
+          </div>
+          <div class="gift-penguin-item" id="peng-card-3" onclick="selectThirdPenguin()">
+            <svg width="126" height="148"><use href="#gift-penguin-symbol"/></svg>
+            <span class="gift-penguin-label">3. Special Question 💖</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- PENGUIN 1 STEP A: PARTY HAT PENGUIN WITH CAKE -->
+      <div class="stage-screen" id="stage-p1-splash">
+        <div class="p1-bday-banner">HAPPY<br/>BIRTHDAY</div>
+        <svg viewBox="0 0 260 190" width="245" height="175">
+          <rect x="18" y="130" width="40" height="40" rx="4" fill="#fde047" stroke="#ca8a04" stroke-width="2"/>
+          <rect x="35" y="130" width="6" height="40" fill="#e11d48"/>
+          <rect x="195" y="125" width="45" height="45" rx="4" fill="#f9a8d4" stroke="#db2777" stroke-width="2"/>
+          <rect x="214" y="125" width="7" height="45" fill="#e11d48"/>
+          <path d="M80 170 C74 90, 95 58, 130 58 C165 58, 186 90, 180 170 Z" fill="#8b8378" stroke="#27272a" stroke-width="3.5"/>
+          <path d="M94 170 C90 110, 105 84, 130 84 C155 84, 170 110, 166 170 Z" fill="#ffffff"/>
+          <polygon points="122,58 145,16 158,64" fill="#93c5fd" stroke="#27272a" stroke-width="3"/>
+          <circle cx="145" cy="14" r="6" fill="#fde047" stroke="#27272a" stroke-width="2"/>
+          <path d="M108 102 Q114 94 120 102" fill="none" stroke="#27272a" stroke-width="3" stroke-linecap="round"/>
+          <path d="M140 102 Q146 94 152 102" fill="none" stroke="#27272a" stroke-width="3" stroke-linecap="round"/>
+          <ellipse cx="102" cy="110" rx="7" ry="4" fill="#fda4af"/><ellipse cx="158" cy="110" rx="7" ry="4" fill="#fda4af"/>
+          <ellipse cx="130" cy="107" rx="6" ry="4" fill="#facc15" stroke="#27272a" stroke-width="2"/>
+          <g transform="translate(172, 72)">
+            <rect x="0" y="24" width="42" height="26" rx="4" fill="#ffffff" stroke="#27272a" stroke-width="2.5"/>
+            <path d="M0 32 Q10 40 21 32 T42 32" fill="none" stroke="#f43f5e" stroke-width="3"/>
+            <rect x="18" y="8" width="6" height="16" fill="#fca5a5" stroke="#27272a" stroke-width="2"/>
+            <path d="M21 0 C17 6, 17 10, 21 11 C25 10, 25 6, 21 0 Z" fill="#f59e0b"/>
+          </g>
+        </svg>
+        <div class="stage-nav-bar" style="justify-content:center;">
+          <button class="corner-nav-btn" onclick="goToStage('stage-p1-letter')">Open Birthday Note 💌 ➔</button>
+        </div>
+      </div>
+
+      <!-- PENGUIN 1 STEP B: HEART PHOTO + SEPARATE PENGUIN 1 NOTE -->
+      <div class="stage-screen" id="stage-p1-letter">
+        <div class="gingham-bg">
+          <div class="p1-letter-grid">
+            <div class="heart-photo-wrapper">
+              <div style="font-size:1.45rem; align-self:flex-start; margin-left:10px;">📷 ✨</div>
+              <svg class="svg-heart-frame" viewBox="0 0 200 185">
+                <path d="M100,170 C100,170 12,115 12,59 C12,26 40,8 68,15 C84,19 100,34 100,34 C100,34 116,19 132,15 C160,8 188,26 188,59 C188,115 100,170 100,170 Z" fill="#fff" stroke="#f43f5e" stroke-width="6"/>
+                <image id="p1-heart-img" href="" width="200" height="185" preserveAspectRatio="xMidYMid slice" clip-path="url(#heart-clip-200)" />
+              </svg>
+              <div class="heart-caption-hand" id="p1-heart-caption">Cutie ❤️</div>
+              <div style="font-size:1.4rem; margin-top:4px;">🐰 🌸 🌼</div>
+            </div>
+
+            <div class="p1-letter-box">
+              <div class="p1-letter-title">HAPPY BIRTHDAY</div>
+              <div class="p1-letter-text" id="p1-letter-text"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="stage-nav-bar">
+          <button class="corner-nav-btn" onclick="openChoosePenguinHub()">⬅ Back to 3 Penguins</button>
+          <button class="corner-nav-btn" onclick="selectSecondPenguin()">Next Penguin (Full Site) 🎂 ➔</button>
+        </div>
+      </div>
+
+      <!-- PENGUIN 3 SCENE 1: 5 HEART PHOTOS COLLAGE -->
+      <div class="stage-screen" id="stage-p3-scene1">
+        <div class="gingham-bg">
+          <div style="text-align:center;"><span class="p3-cursive-word" id="p3-top-word">Handsome</span></div>
+          <div class="p3-hearts-collage">
+            <div style="text-align:center;">
+              <svg width="104" height="95" viewBox="0 0 200 185"><image id="p3-h-0" href="" width="200" height="185" preserveAspectRatio="xMidYMid slice" clip-path="url(#heart-clip-200)"/></svg>
+              <div class="p3-small-label">my love ↗</div>
+            </div>
+            <div style="text-align:center;">
+              <svg width="120" height="110" viewBox="0 0 200 185"><image id="p3-h-1" href="" width="200" height="185" preserveAspectRatio="xMidYMid slice" clip-path="url(#heart-clip-200)"/></svg>
+            </div>
+            <div style="text-align:center;">
+              <svg width="104" height="95" viewBox="0 0 200 185"><image id="p3-h-2" href="" width="200" height="185" preserveAspectRatio="xMidYMid slice" clip-path="url(#heart-clip-200)"/></svg>
+              <div class="p3-small-label">↖ my baby</div>
+            </div>
+            <div style="text-align:center;">
+              <svg width="104" height="95" viewBox="0 0 200 185"><image id="p3-h-3" href="" width="200" height="185" preserveAspectRatio="xMidYMid slice" clip-path="url(#heart-clip-200)"/></svg>
+            </div>
+            <div style="text-align:center;"><span class="p3-cursive-word" id="p3-bottom-word">boyfriend</span></div>
+            <div style="text-align:center;">
+              <svg width="104" height="95" viewBox="0 0 200 185"><image id="p3-h-4" href="" width="200" height="185" preserveAspectRatio="xMidYMid slice" clip-path="url(#heart-clip-200)"/></svg>
+            </div>
+          </div>
+        </div>
+        <div class="stage-nav-bar">
+          <button class="corner-nav-btn" onclick="openChoosePenguinHub()">⬅ Back to 3 Penguins</button>
+          <button class="corner-nav-btn" onclick="goToStage('stage-p3-scene2')">Next: Special Question ➔</button>
+        </div>
+      </div>
+
+      <!-- PENGUIN 3 SCENE 2: WILL YOU BE MINE? -->
+      <div class="stage-screen" id="stage-p3-scene2">
+        <div class="will-you-stage">
+          <svg class="curved-header-svg" viewBox="0 0 420 85" style="height:75px;">
+            <defs><path id="arc-mine" d="M 40,72 Q 210,16 380,72" /></defs>
+            <text class="curved-header-text" style="fill:#991b1b; font-size:28px;"><textPath href="#arc-mine" startOffset="50%" text-anchor="middle">Will you be mine?</textPath></text>
+          </svg>
+          <div class="will-you-collage-row">
+            <div style="display:flex; flex-direction:column; gap:10px;">
+              <img id="p3-m-1" class="circle-mini-photo" src="" alt="Us 1" />
+              <img id="p3-m-2" class="circle-mini-photo" src="" alt="Us 2" />
+            </div>
+            <svg width="180" height="165" viewBox="0 0 200 185" style="filter:drop-shadow(0 10px 20px rgba(153,27,27,0.22));">
+              <image id="p3-m-0" href="" width="200" height="185" preserveAspectRatio="xMidYMid slice" clip-path="url(#heart-clip-200)"/>
+            </svg>
+            <div style="display:flex; flex-direction:column; gap:10px;">
+              <img id="p3-m-3" class="circle-mini-photo" src="" alt="Us 3" />
+              <img id="p3-m-4" class="circle-mini-photo" src="" alt="Us 4" />
+            </div>
+          </div>
+          <div class="p3-cursive-word" style="color:#e11d48; margin-top:4px;">Always & Forever ❤️</div>
+        </div>
+        <div class="stage-nav-bar">
+          <button class="corner-nav-btn" onclick="goToStage('stage-p3-scene1')">⬅ Back</button>
+          <button class="corner-nav-btn" onclick="openVirtualHugScene()">Yes! Next: Virtual Hug 🤗 ➔</button>
+        </div>
+      </div>
+
+      <!-- PENGUIN 3 SCENE 3: VIRTUAL HUG FOR YA! + I MISS YOU -->
+      <div class="stage-screen" id="stage-p3-scene3">
+        <div class="virtual-hug-stage">
+          <svg class="curved-header-svg" viewBox="0 0 420 85" style="height:75px;">
+            <defs><path id="arc-hug" d="M 40,72 Q 210,16 380,72" /></defs>
+            <text class="curved-header-text" style="fill:#991b1b; font-size:26px;"><textPath href="#arc-hug" startOffset="50%" text-anchor="middle">Virtual hug for ya!</textPath></text>
+          </svg>
+          <svg viewBox="0 0 240 175" width="220" height="160">
+            <path d="M120,160 C120,160 25,105 25,52 C25,22 52,6 80,14 C100,20 120,38 120,38 C120,38 140,20 160,14 C188,6 215,22 215,52 C215,105 120,160 120,160 Z" fill="#ffe4e6" />
+            <g class="penguin-happy-group">
+              <circle cx="102" cy="76" r="28" fill="#fde047" stroke="#451a03" stroke-width="3"/>
+              <path d="M82 102 C78 135, 92 148, 114 148 L122 104 Z" fill="#fde047" stroke="#451a03" stroke-width="3"/>
+              <circle cx="136" cy="82" r="26" fill="#ffffff" stroke="#1f2937" stroke-width="3"/>
+              <path d="M116 106 C116 142, 134 148, 152 146 C156 124, 150 106, 134 104 Z" fill="#ffffff" stroke="#1f2937" stroke-width="3"/>
+              <path d="M98 112 Q125 106 142 116" fill="none" stroke="#451a03" stroke-width="8" stroke-linecap="round"/>
+              <path d="M140 120 Q115 126 96 116" fill="none" stroke="#1f2937" stroke-width="7" stroke-linecap="round"/>
+              <circle cx="92" cy="80" r="4.5" fill="#fb7185"/><circle cx="146" cy="88" r="4.5" fill="#fb7185"/>
+              <path d="M94 72 Q99 68 104 72" fill="none" stroke="#451a03" stroke-width="2.5" stroke-linecap="round"/>
+              <path d="M134 80 Q139 76 144 80" fill="none" stroke="#1f2937" stroke-width="2.5" stroke-linecap="round"/>
+            </g>
+          </svg>
+          <div class="miss-you-typewriter" id="miss-you-text">I MISS YOU</div>
+        </div>
+        <div class="stage-nav-bar">
+          <button class="corner-nav-btn" onclick="goToStage('stage-p3-scene2')">⬅ Back</button>
+          <button class="corner-nav-btn" onclick="openILoveYouScene()">Final Surprise ❤️ ➔</button>
+        </div>
+      </div>
+
+      <!-- PENGUIN 3 SCENE 4: GIANT I LOVE YOU FINALE -->
+      <div class="stage-screen" id="stage-p3-scene4">
+        <div class="iloveyou-card">
+          <svg viewBox="0 0 500 60" style="position:absolute; top:0; left:0; width:100%;" preserveAspectRatio="none">
+            <path d="M0,0 L500,0 L500,28 Q250,58 0,28 Z" fill="#ea580c"/>
+            <path d="M0,22 Q250,52 500,22 L500,38 Q250,64 0,38 Z" fill="#fdba74" opacity="0.7"/>
+          </svg>
+          <div class="iloveyou-big-text" id="iloveyou-typewriter">I LOVE
+YOU ❤️</div>
+          <svg viewBox="0 0 500 60" style="position:absolute; bottom:0; left:0; width:100%;" preserveAspectRatio="none">
+            <path d="M0,32 Q250,2 500,32 L500,60 L0,60 Z" fill="#ea580c"/>
+            <path d="M0,22 Q250,-4 500,22 L500,36 Q250,8 0,36 Z" fill="#fdba74" opacity="0.7"/>
+          </svg>
+        </div>
+        <div class="stage-nav-bar">
+          <button class="corner-nav-btn" onclick="openChoosePenguinHub()">⬅ Back to 3 Penguins</button>
+          <button class="corner-nav-btn" onclick="selectSecondPenguin()">Explore Full Birthday Site 🎂 ➔</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FLOATING BUTTONS FOR INNER SITE -->
+  <button id="back-to-penguins-fab" onclick="openChoosePenguinHub()">🐧 Back to 3 Penguins</button>
+  <button class="floating-party-btn" onclick="burstConfetti(110)">🎉 Confetti!</button>
+
+  <!-- PENGUIN 2: FULL ORIGINAL INNER BIRTHDAY WEBSITE -->
+  <main id="inner-birthday-site">
+    <section class="hero-wrap">
+      <div class="hero-pill" id="view-badge">🎂 A Special Birthday Surprise For You</div>
+      <h1 class="hero-main-title">Happy Birthday, <span id="view-bf-name">My Favorite Person</span>! ❤️</h1>
+      <p class="hero-subtext" id="view-hero-sub">Today is all about celebrating the boy who makes my life brighter, warmer, and happier every single day.</p>
+
+      <div class="cake-stage-card">
+        <div class="cake-badge" id="cake-status-badge">🕯️ Tap the candles (or button below) to blow them out!</div>
+        <div class="cake-svg-container" onclick="blowAllCandles()">
+          <svg viewBox="0 0 280 190" width="245" height="165">
+            <ellipse cx="140" cy="172" rx="112" ry="12" fill="#fecdd3" />
+            <rect x="122" y="156" width="36" height="16" rx="4" fill="#fda4af" />
+            <rect x="46" y="106" width="188" height="54" rx="14" fill="#fda4af" stroke="#881337" stroke-width="3"/>
+            <path d="M46 116 Q69 135 93 116 T140 116 T187 116 T234 116" fill="none" stroke="#ffffff" stroke-width="9" stroke-linecap="round"/>
+            <rect x="72" y="62" width="136" height="46" rx="12" fill="#fb7185" stroke="#881337" stroke-width="3"/>
+            <path d="M72 72 Q95 88 117 72 T162 72 T208 72" fill="none" stroke="#ffffff" stroke-width="8" stroke-linecap="round"/>
+            <rect x="88"  y="30" width="9" height="32" rx="3" fill="#fef08a" stroke="#881337" stroke-width="2"/>
+            <rect x="112" y="26" width="9" height="36" rx="3" fill="#bae6fd" stroke="#881337" stroke-width="2"/>
+            <rect x="136" y="22" width="9" height="40" rx="3" fill="#fbcfe8" stroke="#881337" stroke-width="2"/>
+            <rect x="160" y="26" width="9" height="36" rx="3" fill="#bbf7d0" stroke="#881337" stroke-width="2"/>
+            <rect x="184" y="30" width="9" height="32" rx="3" fill="#ddd6fe" stroke="#881337" stroke-width="2"/>
+            <g class="flame-group" id="c-flame-0" onclick="event.stopPropagation(); blowSingleCandle(0)"><path d="M92.5 10 C86 20, 86 27, 92.5 29 C99 27, 99 20, 92.5 10 Z" fill="#f59e0b"/><circle cx="92.5" cy="24" r="3" fill="#fef08a"/></g>
+            <g class="flame-group" id="c-flame-1" onclick="event.stopPropagation(); blowSingleCandle(1)"><path d="M116.5 6 C110 16, 110 23, 116.5 25 C123 23, 123 16, 116.5 6 Z" fill="#f59e0b"/><circle cx="116.5" cy="20" r="3" fill="#fef08a"/></g>
+            <g class="flame-group" id="c-flame-2" onclick="event.stopPropagation(); blowSingleCandle(2)"><path d="M140.5 2 C134 12, 134 19, 140.5 21 C147 19, 147 12, 140.5 2 Z" fill="#f59e0b"/><circle cx="140.5" cy="16" r="3" fill="#fef08a"/></g>
+            <g class="flame-group" id="c-flame-3" onclick="event.stopPropagation(); blowSingleCandle(3)"><path d="M164.5 6 C158 16, 158 23, 164.5 25 C171 23, 171 16, 164.5 6 Z" fill="#f59e0b"/><circle cx="164.5" cy="20" r="3" fill="#fef08a"/></g>
+            <g class="flame-group" id="c-flame-4" onclick="event.stopPropagation(); blowSingleCandle(4)"><path d="M188.5 10 C182 20, 182 27, 188.5 29 C195 27, 195 20, 188.5 10 Z" fill="#f59e0b"/><circle cx="188.5" cy="24" r="3" fill="#fef08a"/></g>
+          </svg>
+        </div>
+        <button class="blow-btn" id="blow-action-btn" onclick="blowAllCandles()">💨 Make a Wish & Blow Out Candles</button>
+        <div class="secret-wish-box" id="secret-wish-box">
+          <div class="secret-wish-label">✨ Secret Birthday Wish Unlocked ✨</div>
+          <div class="secret-wish-text" id="view-secret-wish"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-block">
+      <div class="section-eyebrow">Snapshots of Us</div>
+      <h2 class="section-title">Our Favorite Memories 📸</h2>
+      <p class="section-desc">Tap any polaroid to view it full-screen. Every moment with you is a memory I want to keep forever.</p>
+      <div class="scrapbook-grid" id="scrapbook-grid"></div>
+    </section>
+
+    <div class="reasons-section-bg">
+      <section class="section-block">
+        <div class="section-eyebrow">Tap Each Card To Reveal</div>
+        <h2 class="section-title">Reasons Why You're So Special ✨</h2>
+        <p class="section-desc">Just a few of the million little things that make me fall for you over and over again.</p>
+        <div class="reasons-grid" id="reasons-grid"></div>
+      </section>
+    </div>
+
+    <section class="section-block">
+      <div class="section-eyebrow">Written From The Heart</div>
+      <h2 class="section-title">A Birthday Note For You 💌</h2>
+      <p class="section-desc">Because some feelings deserve to be written down and kept forever.</p>
+      <div class="letter-envelope-wrapper">
+        <div class="wax-seal-badge">❤️</div>
+        <div class="letter-Inner-paper">
+          <div class="letter-greeting" id="view-letter-greeting">My Dearest Love,</div>
+          <div class="letter-content-body" id="view-letter-body"></div>
+          <div class="letter-signature" id="view-letter-sign"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="finale-banner">
+      <button class="hug-btn" onclick="sendBirthdayHug()">🤗 Tap For A Giant Birthday Hug & Kiss!</button>
+      <div class="hug-feedback" id="hug-feedback">💖 Consider yourself hugged super tight! Happy Birthday, baby! 💖</div>
+    </section>
+  </main>
+
+  <!-- LIGHTBOX MODAL -->
+  <div id="lightbox-modal" onclick="closeLightbox()">
+    <div class="lightbox-card" onclick="event.stopPropagation()">
+      <button class="close-circle-btn" style="position:absolute; top:10px; right:10px;" onclick="closeLightbox()">✕</button>
+      <img id="lightbox-img" src="" alt="Full view" />
+      <div class="lightbox-caption" id="lightbox-caption"></div>
+    </div>
+  </div>
+
+  <!-- PRIVATE CUSTOMIZER STUDIO MODAL -->
+  <div class="studio-modal-backdrop" id="customizer-modal">
+    <div class="studio-modal-box">
+      <div class="studio-header">
+        <h3>🎨 Private Gift Customizer (All 3 Penguins)</h3>
+        <button class="close-circle-btn" onclick="closeCustomizerModal()">✕</button>
+      </div>
+
+      <div class="privacy-banner">
+        🔒 <strong>100% Private On-Device Studio:</strong> All photos stay inside your browser and never touch any server. Nobody else will ever see them!
+      </div>
+
+      <div class="studio-field">
+        <label>🐧 Penguin 1: Heart Frame Caption (e.g. "Cutie ❤️")</label>
+        <input type="text" id="edit-p1-caption" oninput="syncLiveEdits()" />
+      </div>
+
+      <div class="studio-field">
+        <label>🐧💌 Penguin 1 Note (Shown next to Heart Photo in Penguin 1)</label>
+        <textarea rows="4" id="edit-p1-letter-body" oninput="syncLiveEdits()"></textarea>
+      </div>
+
+      <div class="studio-field">
+        <label>🎂 Penguin 2 (Main Website): Boyfriend's Name / Nickname</label>
+        <input type="text" id="edit-bf-name" oninput="syncLiveEdits()" />
+      </div>
+
+      <div class="studio-field">
+        <label>🎂 Hero Top Badge & Subtitle Message</label>
+        <input type="text" id="edit-badge" style="margin-bottom:6px;" oninput="syncLiveEdits()" />
+        <textarea rows="2" id="edit-hero-sub" oninput="syncLiveEdits()"></textarea>
+      </div>
+
+      <div class="studio-field">
+        <label>🎂💌 Penguin 2 Wax-Seal Love Letter (Separate Note in Main Website)</label>
+        <textarea rows="5" id="edit-letter-body" oninput="syncLiveEdits()"></textarea>
+      </div>
+
+      <div class="studio-field">
+        <label>💌 Penguin 2 Letter Greeting & Signature</label>
+        <div style="display:flex; gap:10px;">
+          <input type="text" id="edit-letter-greeting" placeholder="Greeting" oninput="syncLiveEdits()" />
+          <input type="text" id="edit-letter-sign" placeholder="Signature" oninput="syncLiveEdits()" />
+        </div>
+      </div>
+
+      <div class="studio-field">
+        <label>🕯️ Secret Candle Wish (Unlocked when he blows out the 5 candles)</label>
+        <textarea rows="2" id="edit-secret-wish" oninput="syncLiveEdits()"></textarea>
+      </div>
+
+      <div class="studio-field">
+        <label>🐧 Penguin 3 Collage Words (Top Script & Bottom Script)</label>
+        <div style="display:flex; gap:10px;">
+          <input type="text" id="edit-p3-top" placeholder="e.g. Handsome" oninput="syncLiveEdits()" />
+          <input type="text" id="edit-p3-bottom" placeholder="e.g. boyfriend" oninput="syncLiveEdits()" />
+        </div>
+      </div>
+
+      <div class="studio-field">
+        <label>📸 Upload Photos (Photo #1 is used in Penguin 1's Heart & Penguin 3's Center Heart)</label>
+        <div id="photo-editor-list"></div>
+        <button class="add-slot-btn" onclick="addNewPhotoSlot()">+ Add Another Photo</button>
+      </div>
+
+      <div class="studio-field">
+        <label>✨ "Reasons Why You're So Special" Tap-to-Reveal Cards</label>
+        <div id="reasons-editor-list"></div>
+      </div>
+
+      <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:16px;">
+        <button class="c-btn ghost" style="background:#e5e7eb; color:#111827;" onclick="closeCustomizerModal()">Done Previewing</button>
+        <button class="c-btn export" onclick="closeCustomizerModal(); openSaveModal();">🎁 Next: Save / Send to Boyfriend</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SAVE / EXPORT MODAL -->
+  <div class="studio-modal-backdrop" id="save-modal">
+    <div class="studio-modal-box">
+      <div class="studio-header">
+        <h3>🎁 Save / Send to Boyfriend</h3>
+        <button class="close-circle-btn" onclick="closeSaveModal()">✕</button>
+      </div>
+      <p style="color:#4b5563; font-size:0.94rem; margin-bottom:16px; line-height:1.5;">
+        Click below to download a single self-contained file with <strong>all your photos & both separate notes permanently embedded</strong>, the <strong>top editor bar removed</strong>, and starting right on the <strong>"PLS ACCEPT THE GIFT"</strong> penguin screen!
+      </p>
+      <button class="c-btn export" style="width:100%; justify-content:center; padding:14px; font-size:1rem;" onclick="downloadFinalGiftHtml()">
+        📥 Download Final Gift Website (.html)
+      </button>
+    </div>
+  </div>
+
+  <!-- EMBEDDED GIFT DATA -->
+  <script id="gift-data-script">
+    window.GIFT_DATA = {
+      bfName: "Handsome",
+      p1HeartCaption: "Cutie ❤️",
+      p1LetterBody: "Happy Birthday to my favorite person! 🎂❤️\n\nEvery day with you is so special. You make my world brighter just by being in it, and I'm so lucky to call you mine.\n\nWishing you the happiest birthday ever, cutie!",
+      p3TopWord: "Handsome",
+      p3BottomWord: "boyfriend",
+      badge: "🎂 A Special Birthday Surprise Just For You",
+      heroSub: "Every day with you feels like my favorite adventure. Thank you for being my safe place, my biggest smile, and my best friend.",
+      secretWish: "May this year bring you endless happiness, big wins, late-night drives, and a million more memories with me! I love you! ❤️",
+      letterGreeting: "To My Favorite Person,",
+      letterBody: "Happy Birthday, my love! ❤️\n\nThank you for always making my days brighter, holding my hand through everything, and being my favorite person in the whole world.\n\nEvery moment with you is a gift I cherish. I hope this year brings you everything your heart desires—and I can't wait to celebrate many more birthdays by your side!",
+      letterSign: "Forever & Always Yours ❤️",
+      photos: [
+        { url: "https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=700&q=80", caption: "My absolute favorite smile in the world ❤️", date: "Best Day Ever" },
+        { url: "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=700&q=80", caption: "Every adventure is better with you by my side ✨", date: "Sweetest Memory" },
+        { url: "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=700&q=80", caption: "Us being our happiest, goofiest selves 🥰", date: "Forever Us" },
+        { url: "https://images.unsplash.com/photo-1494774157365-9e04c6720e47?auto=format&fit=crop&w=700&q=80", caption: "Here's to a hundred more birthdays together! 🎂", date: "Birthday Boy" },
+        { url: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=700&q=80", caption: "You + Me = Always & Forever 💖", date: "My Safe Place" }
+      ],
+      reasons: [
+        { icon: "😊", title: "Reason #1: Your Smile", secret: "One look at your smile instantly fixes my entire day, no matter what!" },
+        { icon: "🫂", title: "Reason #2: My Safe Place", secret: "Your hugs feel like home. Nowhere else in the world feels as peaceful." },
+        { icon: "😂", title: "Reason #3: Our Laughs", secret: "Nobody makes me laugh as hard as you do with our silly inside jokes!" },
+        { icon: "💖", title: "Reason #4: Your Heart", secret: "You are the kindest, most caring soul I have ever met. I'm so lucky you're mine!" }
+      ]
+    };
+  </script>
+
+  <script>
+    // Null-safe DOM helpers to prevent any runtime errors
+    function setText(id, val) { const el = document.getElementById(id); if (el) el.textContent = val; }
+    function setVal(id, val)  { const el = document.getElementById(id); if (el) el.value = val; }
+    function getVal(id, fallback) { const el = document.getElementById(id); return el ? el.value : fallback; }
+
+    let activeTimers = [];
+    function clearStageTimers() {
+      activeTimers.forEach(t => clearTimeout(t));
+      activeTimers = [];
+    }
+
+    function goToStage(screenId) {
+      clearStageTimers();
+      const overlay = document.getElementById('stage-overlay');
+      if (overlay) overlay.classList.remove('hidden');
+      document.querySelectorAll('.stage-screen').forEach(el => el.classList.remove('active'));
+      const target = document.getElementById(screenId);
+      if (target) target.classList.add('active');
+    }
+
+    function triggerWhyNoScreen() {
+      const frame = document.getElementById('stage-card-frame');
+      if (frame) {
+        frame.classList.remove('shake');
+        void frame.offsetWidth;
+        frame.classList.add('shake');
+      }
+      goToStage('stage-why-no');
+    }
+
+    function openChoosePenguinHub() {
+      goToStage('stage-choose-penguin');
+      setText('typewriter-sub', '');
+      ['peng-card-1', 'peng-card-2', 'peng-card-3'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.classList.remove('pop-visible');
+      });
+
+      activeTimers.push(setTimeout(() => document.getElementById('peng-card-1')?.classList.add('pop-visible'), 120));
+      activeTimers.push(setTimeout(() => document.getElementById('peng-card-2')?.classList.add('pop-visible'), 420));
+      activeTimers.push(setTimeout(() => document.getElementById('peng-card-3')?.classList.add('pop-visible'), 720));
+
+      const msg = "Each one has something special to say ✨";
+      const subEl = document.getElementById('typewriter-sub');
+      msg.split('').forEach((ch, idx) => {
+        activeTimers.push(setTimeout(() => { if (subEl) subEl.textContent += ch; }, 350 + idx * 32));
+      });
+    }
+
+    function selectFirstPenguin() {
+      goToStage('stage-p1-splash');
+      burstConfetti(90);
+      activeTimers.push(setTimeout(() => goToStage('stage-p1-letter'), 2100));
+    }
+
+    function selectSecondPenguin() {
+      clearStageTimers();
+      document.getElementById('stage-overlay')?.classList.add('hidden');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      burstConfetti(140);
+    }
+
+    function selectThirdPenguin() {
+      goToStage('stage-p3-scene1');
+      burstConfetti(80);
+    }
+
+    function openVirtualHugScene() {
+      goToStage('stage-p3-scene3');
+      const missEl = document.getElementById('miss-you-text');
+      if (missEl) missEl.textContent = '';
+      "I MISS YOU".split('').forEach((ch, i) => {
+        activeTimers.push(setTimeout(() => { if (missEl) missEl.textContent += ch; }, 220 + i * 90));
+      });
+    }
+
+    function openILoveYouScene() {
+      goToStage('stage-p3-scene4');
+      burstConfetti(150);
+      const loveEl = document.getElementById('iloveyou-typewriter');
+      if (loveEl) loveEl.textContent = '';
+      "I LOVE\nYOU ❤️".split('').forEach((ch, i) => {
+        activeTimers.push(setTimeout(() => { if (loveEl) loveEl.textContent += ch; }, 180 + i * 105));
+      });
+    }
+
+    // 5-CANDLE BIRTHDAY CAKE
+    let candleStates = [true, true, true, true, true];
+    function blowSingleCandle(idx) {
+      if (!candleStates[idx]) return;
+      candleStates[idx] = false;
+      document.getElementById(`c-flame-${idx}`)?.classList.add('out');
+      checkAllCandlesBlown();
+    }
+
+    function blowAllCandles() {
+      if (!candleStates.some(Boolean)) {
+        candleStates = [true, true, true, true, true];
+        for (let i = 0; i < 5; i++) document.getElementById(`c-flame-${i}`)?.classList.remove('out');
+        setText('cake-status-badge', "🕯️ Tap the candles (or button below) to blow them out!");
+        setText('blow-action-btn', "💨 Make a Wish & Blow Out Candles");
+        return;
+      }
+      for (let i = 0; i < 5; i++) {
+        candleStates[i] = false;
+        document.getElementById(`c-flame-${i}`)?.classList.add('out');
+      }
+      checkAllCandlesBlown();
+    }
+
+    function checkAllCandlesBlown() {
+      if (candleStates.every(s => !s)) {
+        document.getElementById('secret-wish-box')?.classList.add('revealed');
+        setText('cake-status-badge', "🎉 Yay! Wish Made! Happy Birthday!");
+        setText('blow-action-btn', "🔥 Relight Candles");
+        burstConfetti(140);
+      }
+    }
+
+    function escapeSafe(str) {
+      return String(str || '').replace(/[&<>"']/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m]));
+    }
+
+    function getPhotoSafe(idx) {
+      const list = window.GIFT_DATA.photos;
+      return (!list || !list.length) ? '' : list[idx % list.length].url;
+    }
+
+    function renderSite() {
+      const d = window.GIFT_DATA;
+      document.getElementById('p1-heart-img')?.setAttribute('href', getPhotoSafe(0));
+      setText('p1-heart-caption', d.p1HeartCaption || 'Cutie ❤️');
+      setText('p1-letter-text', d.p1LetterBody !== undefined ? d.p1LetterBody : d.letterBody);
+
+      setText('p3-top-word', d.p3TopWord || 'Handsome');
+      setText('p3-bottom-word', d.p3BottomWord || 'boyfriend');
+
+      for (let i = 0; i < 5; i++) {
+        document.getElementById(`p3-h-${i}`)?.setAttribute('href', getPhotoSafe(i));
+        const mEl = document.getElementById(`p3-m-${i}`);
+        if (mEl) {
+          if (mEl.tagName.toLowerCase() === 'image') mEl.setAttribute('href', getPhotoSafe(i));
+          else mEl.src = getPhotoSafe(i);
+        }
+      }
+
+      setText('view-bf-name', d.bfName);
+      setText('view-badge', d.badge);
+      setText('view-hero-sub', d.heroSub);
+      setText('view-secret-wish', d.secretWish);
+      setText('view-letter-greeting', d.letterGreeting);
+      setText('view-letter-body', d.letterBody);
+      setText('view-letter-sign', d.letterSign);
+
+      const grid = document.getElementById('scrapbook-grid');
+      if (grid) {
+        grid.innerHTML = '';
+        d.photos.forEach((p, idx) => {
+          const card = document.createElement('div');
+          card.className = 'polaroid-item';
+          card.onclick = () => openLightbox(p.url, p.caption);
+          card.innerHTML = `
+            <div class="washi-tape"></div>
+            <div class="polaroid-photo-frame"><img src="${p.url}" alt="Memory ${idx + 1}" loading="lazy" /></div>
+            <div class="polaroid-caption-text">${escapeSafe(p.caption)}</div>
+            <span class="polaroid-date-tag">${escapeSafe(p.date || '✨ Special Memory')}</span>
+          `;
+          grid.appendChild(card);
+        });
+      }
+
+      const rGrid = document.getElementById('reasons-grid');
+      if (rGrid) {
+        rGrid.innerHTML = '';
+        d.reasons.forEach(r => {
+          const rc = document.createElement('div');
+          rc.className = 'reason-card';
+          rc.onclick = () => rc.classList.toggle('flipped');
+          rc.innerHTML = `
+            <div class="reason-icon">${escapeSafe(r.icon)}</div>
+            <div class="reason-front-title">${escapeSafe(r.title)}</div>
+            <div class="reason-tap-hint">Tap to reveal 💌</div>
+            <div class="reason-back-text">${escapeSafe(r.secret)}</div>
+          `;
+          rGrid.appendChild(rc);
+        });
+      }
+    }
+
+    function openLightbox(url, caption) {
+      const img = document.getElementById('lightbox-img');
+      if (img) img.src = url;
+      setText('lightbox-caption', caption);
+      document.getElementById('lightbox-modal')?.classList.add('open');
+    }
+    function closeLightbox() { document.getElementById('lightbox-modal')?.classList.remove('open'); }
+    function sendBirthdayHug() {
+      const fb = document.getElementById('hug-feedback');
+      if (fb) fb.style.display = 'block';
+      burstConfetti(160);
+    }
+
+    // CUSTOMIZER STUDIO
+    function openCustomizerModal() {
+      const d = window.GIFT_DATA;
+      setVal('edit-p1-caption', d.p1HeartCaption || 'Cutie ❤️');
+      setVal('edit-p1-letter-body', d.p1LetterBody !== undefined ? d.p1LetterBody : d.letterBody);
+      setVal('edit-bf-name', d.bfName);
+      setVal('edit-badge', d.badge);
+      setVal('edit-hero-sub', d.heroSub);
+      setVal('edit-letter-body', d.letterBody);
+      setVal('edit-letter-greeting', d.letterGreeting);
+      setVal('edit-letter-sign', d.letterSign);
+      setVal('edit-secret-wish', d.secretWish);
+      setVal('edit-p3-top', d.p3TopWord || 'Handsome');
+      setVal('edit-p3-bottom', d.p3BottomWord || 'boyfriend');
+
+      renderPhotoEditorSlots();
+      renderReasonsEditorSlots();
+      document.getElementById('customizer-modal')?.classList.add('open');
+    }
+    function closeCustomizerModal() { document.getElementById('customizer-modal')?.classList.remove('open'); }
+    function openSaveModal() { document.getElementById('save-modal')?.classList.add('open'); }
+    function closeSaveModal() { document.getElementById('save-modal')?.classList.remove('open'); }
+
+    function renderPhotoEditorSlots() {
+      const list = document.getElementById('photo-editor-list');
+      if (!list) return;
+      list.innerHTML = '';
+      window.GIFT_DATA.photos.forEach((p, idx) => {
+        const row = document.createElement('div');
+        row.className = 'photo-editor-row';
+        row.innerHTML = `
+          <img id="slot-img-${idx}" src="${p.url}" alt="Thumb" />
+          <div style="flex:1; display:flex; flex-direction:column; gap:5px;">
+            <div style="font-size:0.74rem; font-weight:700; color:#e11d48;">Photo #${idx + 1} ${idx === 0 ? '(Main Heart Photo)' : ''}</div>
+            <input type="file" accept="image/*" style="font-size:0.75rem;" onchange="uploadAndCompressPhoto(event, ${idx})" />
+            <input type="text" value="${escapeSafe(p.caption)}" placeholder="Caption..." oninput="updatePhotoField(${idx}, 'caption', this.value)" />
+            <input type="text" value="${escapeSafe(p.date || '')}" placeholder="Date / Tag" oninput="updatePhotoField(${idx}, 'date', this.value)" />
+          </div>
+          <button class="delete-slot-btn" onclick="removePhotoSlot(${idx})">✕</button>
+        `;
+        list.appendChild(row);
+      });
+    }
+
+    function renderReasonsEditorSlots() {
+      const list = document.getElementById('reasons-editor-list');
+      if (!list) return;
+      list.innerHTML = '';
+      window.GIFT_DATA.reasons.forEach((r, idx) => {
+        const row = document.createElement('div');
+        row.className = 'photo-editor-row';
+        row.innerHTML = `
+          <div style="flex:1; display:flex; flex-direction:column; gap:5px;">
+            <input type="text" value="${escapeSafe(r.title)}" placeholder="Card Title" oninput="updateReasonField(${idx}, 'title', this.value)" />
+            <input type="text" value="${escapeSafe(r.secret)}" placeholder="Hidden Reveal Message" oninput="updateReasonField(${idx}, 'secret', this.value)" />
+          </div>
+        `;
+        list.appendChild(row);
+      });
+    }
+
+    function syncLiveEdits() {
+      const d = window.GIFT_DATA;
+      d.p1HeartCaption = getVal('edit-p1-caption', d.p1HeartCaption);
+      d.p1LetterBody   = getVal('edit-p1-letter-body', d.p1LetterBody);
+      d.bfName         = getVal('edit-bf-name', d.bfName);
+      d.badge          = getVal('edit-badge', d.badge);
+      d.heroSub        = getVal('edit-hero-sub', d.heroSub);
+      d.letterBody     = getVal('edit-letter-body', d.letterBody);
+      d.letterGreeting = getVal('edit-letter-greeting', d.letterGreeting);
+      d.letterSign     = getVal('edit-letter-sign', d.letterSign);
+      d.secretWish     = getVal('edit-secret-wish', d.secretWish);
+      d.p3TopWord      = getVal('edit-p3-top', d.p3TopWord);
+      d.p3BottomWord   = getVal('edit-p3-bottom', d.p3BottomWord);
+      renderSite();
+    }
+
+    function updatePhotoField(idx, key, val) { window.GIFT_DATA.photos[idx][key] = val; renderSite(); }
+    function updateReasonField(idx, key, val) { window.GIFT_DATA.reasons[idx][key] = val; renderSite(); }
+
+    function addNewPhotoSlot() {
+      window.GIFT_DATA.photos.push({
+        url: "https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=700&q=80",
+        caption: "Another unforgettable moment with you ❤️",
+        date: "Favorite Memory"
+      });
+      renderPhotoEditorSlots();
+      renderSite();
+    }
+
+    function removePhotoSlot(idx) {
+      if (window.GIFT_DATA.photos.length <= 1) return;
+      window.GIFT_DATA.photos.splice(idx, 1);
+      renderPhotoEditorSlots();
+      renderSite();
+    }
+
+    function uploadAndCompressPhoto(event, idx) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const img = new Image();
+        img.onload = function() {
+          const canvas = document.createElement('canvas');
+          const maxDim = 900;
+          let w = img.width, h = img.height;
+          if (w > h && w > maxDim) { h = Math.round((h * maxDim) / w); w = maxDim; }
+          else if (h >= w && h > maxDim) { w = Math.round((w * maxDim) / h); h = maxDim; }
+          canvas.width = w;
+          canvas.height = h;
+          canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+          const dataUrl = canvas.toDataURL('image/jpeg', 0.84);
+          window.GIFT_DATA.photos[idx].url = dataUrl;
+          const preview = document.getElementById(`slot-img-${idx}`);
+          if (preview) preview.src = dataUrl;
+          renderSite();
+        };
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function downloadFinalGiftHtml() {
+      closeCustomizerModal();
+      closeSaveModal();
+      goToStage('stage-yes-no');
+
+      const clone = document.documentElement.cloneNode(true);
+      ['#creator-bar', '#customizer-modal', '#save-modal'].forEach(sel => clone.querySelector(sel)?.remove());
+
+      const scriptEl = clone.querySelector('#gift-data-script');
+      if (scriptEl) scriptEl.textContent = `\nwindow.GIFT_DATA = ${JSON.stringify(window.GIFT_DATA, null, 2)};\n`;
+
+      const blob = new Blob(['<!DOCTYPE html>\n' + clone.outerHTML], { type: 'text/html' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'happy-birthday-love.html';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+
+    // CONFETTI ENGINE
+    const confettiCanvas = document.getElementById('confetti-canvas');
+    const cCtx = confettiCanvas.getContext('2d');
+    let particles = [], rafId = null;
+
+    function resizeCanvas() {
+      confettiCanvas.width = window.innerWidth;
+      confettiCanvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    function burstConfetti(amount = 110) {
+      const palette = ['#e11d48', '#fb7185', '#f59e0b', '#fde047', '#38bdf8', '#a855f7', '#10b981'];
+      for (let i = 0; i < amount; i++) {
+        particles.push({
+          x: window.innerWidth / 2 + (Math.random() - 0.5) * 220,
+          y: window.innerHeight * 0.45,
+          vx: (Math.random() - 0.5) * 17,
+          vy: -Math.random() * 16 - 5,
+          size: Math.random() * 8 + 6,
+          color: palette[Math.floor(Math.random() * palette.length)],
+          rot: Math.random() * 360,
+          rotSpeed: (Math.random() - 0.5) * 12,
+          gravity: 0.32
+        });
+      }
+      if (!rafId) animateConfetti();
+    }
+
+    function animateConfetti() {
+      cCtx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+      particles.forEach(p => {
+        p.x += p.vx; p.y += p.vy; p.vy += p.gravity; p.rot += p.rotSpeed;
+        cCtx.save();
+        cCtx.translate(p.x, p.y);
+        cCtx.rotate((p.rot * Math.PI) / 180);
+        cCtx.fillStyle = p.color;
+        cCtx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size * 0.65);
+        cCtx.restore();
+      });
+      particles = particles.filter(p => p.y < confettiCanvas.height + 30);
+      rafId = particles.length > 0 ? requestAnimationFrame(animateConfetti) : null;
+    }
+
+    renderSite();
+  </script>
+</body>
+</html>
