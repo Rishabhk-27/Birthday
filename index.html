@@ -1637,12 +1637,19 @@ YOU ❤️</div>
       checkAllCandlesBlown();
     }
 
+    function resetCakeCandles() {
+      candleStates = [true, true, true, true, true];
+      for (let i = 0; i < 5; i++) {
+        document.getElementById(`c-flame-${i}`)?.classList.remove('out');
+      }
+      document.getElementById('secret-wish-box')?.classList.remove('revealed');
+      setText('cake-status-badge', "🕯️ Tap the candles (or button below) to blow them out!");
+      setText('blow-action-btn', "💨 Make a Wish & Blow Out Candles");
+    }
+
     function blowAllCandles() {
       if (!candleStates.some(Boolean)) {
-        candleStates = [true, true, true, true, true];
-        for (let i = 0; i < 5; i++) document.getElementById(`c-flame-${i}`)?.classList.remove('out');
-        setText('cake-status-badge', "🕯️ Tap the candles (or button below) to blow them out!");
-        setText('blow-action-btn', "💨 Make a Wish & Blow Out Candles");
+        resetCakeCandles();
         return;
       }
       for (let i = 0; i < 5; i++) {
@@ -1870,6 +1877,14 @@ YOU ❤️</div>
     function downloadFinalGiftHtml() {
       closeCustomizerModal();
       closeSaveModal();
+      closeLightbox();
+
+      // Always reset cake candles, secret wish box, flipped cards & hug feedback before saving!
+      resetCakeCandles();
+      document.querySelectorAll('.reason-card.flipped').forEach(c => c.classList.remove('flipped'));
+      const fb = document.getElementById('hug-feedback');
+      if (fb) fb.style.display = 'none';
+
       goToStage('stage-yes-no');
 
       const clone = document.documentElement.cloneNode(true);
